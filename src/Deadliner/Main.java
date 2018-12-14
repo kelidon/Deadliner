@@ -155,6 +155,7 @@ public class Main extends JDialog {
 
     private void onCreate() {
         setContentPane(contentPane);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
@@ -213,19 +214,23 @@ public class Main extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        //TODO add your code here
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        //TODO add your code here if necessary
         dispose();
     }
 
     public static void main(String[] args) {
-        Main dialog = new Main();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Main dialog = new Main();
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        });
     }
 }
