@@ -62,8 +62,6 @@ public class Week {
                 }
             }
         }
-        catch(FileNotFoundException exc){}
-        catch(IllegalArgumentException exc){}
-
+        catch(IllegalArgumentException | FileNotFoundException exc){ exc.printStackTrace(); }
     }
 }
