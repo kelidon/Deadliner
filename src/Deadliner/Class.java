@@ -1,3 +1,5 @@
+package Deadliner;
+
 import java.util.Scanner;
 
 /**
