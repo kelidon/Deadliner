@@ -1,5 +1,8 @@
+package Deadliner;
+
+import Deadliner.Class;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -59,8 +62,6 @@ public class Week {
                 }
             }
         }
-        catch(FileNotFoundException exc){}
-        catch(IllegalArgumentException exc){}
-
+        catch(IllegalArgumentException | FileNotFoundException exc){ exc.printStackTrace(); }
     }
 }

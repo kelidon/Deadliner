@@ -1,3 +1,5 @@
+package Deadliner;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -5,24 +7,10 @@ import java.io.File;
 import java.util.Calendar;
 
 public class Main extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private Calendar calendar = Calendar.getInstance();
-    private int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-    static final int NUMBER_OF_CLASSES = 6;
-    static final String[] CLASSES_TIME = {"08:15-09:35", "09:45-11:05", "11:15-12:35", "13:00-14:20", "14:20-15:50", "19:30-21:45"};
-    private static final String FILE_PATH = "src\\timetable.txt";
-    static int viewedDayNumber;
-    private DayPanel[] dayPanels;
-    private Button next, previous, timetable, deadliner;
-    private JRadioButton showMenu;
-    private JPanel menuPanel, timetablePanel;
     static ImageIcon menuIcon = new ImageIcon("image/menu.png"),
             backIcon = new ImageIcon("image/back.png"),
             addIcon = new ImageIcon("image/add.png");
     static Week week;
-    private CardLayout layout;
 
     class DayPanel extends JPanel implements MouseListener {
         private SubjectButton[] subjectButtons = new SubjectButton[6];
@@ -153,6 +141,7 @@ public class Main extends JDialog {
 
     private void onCreate() {
         setContentPane(contentPane);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
@@ -211,19 +200,38 @@ public class Main extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        //TODO add your code here
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        //TODO add your code here if necessary
         dispose();
     }
 
     public static void main(String[] args) {
-        Main dialog = new Main();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Main dialog = new Main();
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        });
     }
+
+    private JPanel contentPane;
+    private JButton buttonOK;
+    private JButton buttonCancel;
+    private Calendar calendar = Calendar.getInstance();
+    private int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    static final int NUMBER_OF_CLASSES = 6;
+    static final String[] CLASSES_TIME = {"08:15-09:35", "09:45-11:05", "11:15-12:35", "13:00-14:20", "14:20-15:50", "19:30-21:45"};
+    private static final String FILE_PATH = "src/timetable.txt";
+    static int viewedDayNumber;
+    private DayPanel[] dayPanels;
+    private Button next, previous, timetable, deadliner;
+    private JRadioButton showMenu;
+    private JPanel menuPanel, timetablePanel;
+    private CardLayout layout;
 }

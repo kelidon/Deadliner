@@ -1,60 +1,55 @@
+package Deadliner;
+
+import Deadliner.Deadline;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashSet;
+import java.util.Date;
 
-public class DeadlinesDialog extends JDialog {
-    private JPanel contentPane;
+public class AddDeadlineDialog extends JDialog {
+    private JPanel contentPane, centralPane = new JPanel();
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JRadioButton back, add;
-    static HashSet<Deadline> deadlines = new HashSet<>();
+    private JRadioButton back;
 
-    public DeadlinesDialog() {
+    AddDeadlineDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setPreferredSize(new Dimension(350, 600));
         setLayout(new BorderLayout());
-
-        var scrollPane = new JScrollPane();
-        add(scrollPane, BorderLayout.CENTER);
-        if(!deadlines.isEmpty()){
-            for(var deadline: deadlines){
-                add(new TextField(deadline.getInfo()+"\t"+ deadline.getDeadlineDate().toString()));
-            }
-        }
 
         var navPanel = new JPanel();
         navPanel.setLayout(new GridLayout(1,5));
         navPanel.setPreferredSize(new Dimension(300,35));
-
         Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
         back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
-
-        Main.addIcon = new ImageIcon(Main.addIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
-        add = new JRadioButton(Main.addIcon);
-        navPanel.add(add);
         add(navPanel, BorderLayout.NORTH);
 
+        TextField day = new TextField("");
+        var month = new TextField("");
+        var year = new TextField("");
+
+        var info = new TextArea("");
+        info.setPreferredSize(new Dimension(300, 350));
+
+        centralPane.add(day);
+        centralPane.add(month);
+        centralPane.add(year);
+        centralPane.add(info);
+        add(centralPane, BorderLayout.CENTER);
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
+                    DeadlinesDialog.deadlines.add(new Deadline(info.getText(),
+                            new Date(Integer.parseInt(year.getText()),
+                                    Integer.parseInt(month.getText()),
+                                    Integer.parseInt(day.getText()))));
+                }catch(IllegalArgumentException exc){}
                 dispose();
-            }
-        });
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var addDeadline = new AddDeadlineDialog();
-                addDeadline.pack();
-                addDeadline.setModalityType(ModalityType.APPLICATION_MODAL);
-                addDeadline.setVisible(true);
-                if(!deadlines.isEmpty()){
-                    for(var deadline: deadlines){
-                        add(new TextField(deadline.getInfo()+"\t"+ deadline.getDeadlineDate().toString()));
-                    }
-                }
             }
         });
         buttonOK.addActionListener(new ActionListener() {
@@ -94,12 +89,4 @@ public class DeadlinesDialog extends JDialog {
         // add your code here if necessary
         dispose();
     }
-
-    public static void main(String[] args) {
-        DeadlinesDialog dialog = new DeadlinesDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }
-
