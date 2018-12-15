@@ -7,35 +7,36 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
 
+import static Deadliner.Main.ICON_SIZE;
+
 public class AddDeadlineDialog extends JDialog {
-    private JPanel contentPane, centralPane = new JPanel();
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JRadioButton back;
 
     AddDeadlineDialog() {
+        setTitle(ADD_DIALOG_TITLE);
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setPreferredSize(new Dimension(350, 600));
+        setPreferredSize(ADD_DIALOG_DIM);
         setLayout(new BorderLayout());
 
         var navPanel = new JPanel();
-        navPanel.setLayout(new GridLayout(1,5));
-        navPanel.setPreferredSize(new Dimension(300,35));
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
-        back = new JRadioButton(Main.backIcon);
+        navPanel.setPreferredSize(NAV_PANEL_DIM);
+        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
+        var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
-        add(navPanel, BorderLayout.NORTH);
+        add(navPanel, BorderLayout.SOUTH);
 
-        TextField day = new TextField("");
-        var month = new TextField("");
-        var year = new TextField("");
+        TextField
+                day = new TextField(),
+                month = new TextField(),
+                year = new TextField();
+        var info = new TextArea();
+        var tempDimension = new Dimension(DATE_FIELDS_DIM);
+        month.setPreferredSize(tempDimension);
+        year.setPreferredSize(tempDimension);
+        day.setPreferredSize(tempDimension);
+        info.setPreferredSize(INFO_DIM);
 
-        var info = new TextArea("");
-        info.setPreferredSize(new Dimension(300, 350));
-
-        
+        var centralPane = new JPanel();
         centralPane.add(day);
         centralPane.add(month);
         centralPane.add(year);
@@ -53,41 +54,27 @@ public class AddDeadlineDialog extends JDialog {
                 dispose();
             }
         });
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                dispose();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                dispose();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
-    private void onOK() {
-        // add your code here
-        dispose();
-    }
-
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
-    }
+    private JPanel contentPane;
+    private final Dimension
+            ADD_DIALOG_DIM = new Dimension(250,400),
+            NAV_PANEL_DIM = new Dimension(250,50),
+            DATE_FIELDS_DIM = new Dimension(70, 20),
+            INFO_DIM = new Dimension(219, 280);
+    private final String ADD_DIALOG_TITLE = "Add a deadline";
 }

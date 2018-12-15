@@ -12,6 +12,7 @@ public class Class {
         this.subject = "";
         this.room = "";
         this.classType = "regular";
+        this.note = "";
     }
 
     public Class(String subject, String room, String classType) {
