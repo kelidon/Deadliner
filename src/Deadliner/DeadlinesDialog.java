@@ -89,7 +89,6 @@ public class DeadlinesDialog extends JDialog {
                         "\t" +
                         String.format("%te %<tB %<tY", deadline.getDeadlineDate()) +
                         "\n");
-
             }
         }
     }

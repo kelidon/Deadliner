@@ -35,7 +35,6 @@ public class AddDeadlineDialog extends JDialog {
         var info = new TextArea("");
         info.setPreferredSize(new Dimension(300, 350));
 
-        
         centralPane.add(day);
         centralPane.add(month);
         centralPane.add(year);
