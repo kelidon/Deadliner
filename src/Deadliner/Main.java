@@ -23,7 +23,6 @@ public class Main extends JDialog {
                 subjectButtons[i] = new SubjectButton(week.classes[day][i], i, day);
                 add(subjectButtons[i]);
                 subjectButtons[i].addMouseListener(this);
-
             }
         }
 
