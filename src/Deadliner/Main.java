@@ -3,124 +3,34 @@ package Deadliner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Main extends JDialog {
-    static ImageIcon menuIcon = new ImageIcon("image/menu.png"),
+    static ImageIcon
+            //menuIcon = new ImageIcon("image/menu.png"),
             backIcon = new ImageIcon("image/back.png"),
             addIcon = new ImageIcon("image/add.png");
-    static Week week;
-
-    class DayPanel extends JPanel implements MouseListener {
-        private SubjectButton[] subjectButtons = new SubjectButton[6];
-        private NoteDialog noteDialog;
-
-        DayPanel(Week week, int day) {
-            setLayout(new GridLayout(NUMBER_OF_CLASSES, 1));
-            setPreferredSize(new Dimension(300, 500));
-            for (int i = 0; i < NUMBER_OF_CLASSES; i++) {
-                subjectButtons[i] = new SubjectButton(week.classes[day][i], i, day);
-                add(subjectButtons[i]);
-                subjectButtons[i].addMouseListener(this);
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            //if (SwingUtilities.isLeftMouseButton(e)) {
-            SubjectButton clicked = ((SubjectButton) e.getSource());
-            int subjectIndex = clicked.getIndex();
-            noteDialog = new NoteDialog(subjectIndex);
-            noteDialog.pack();
-            noteDialog.setModalityType(ModalityType.APPLICATION_MODAL);
-            noteDialog.setVisible(true);
-            //} else if (SwingUtilities.isRightMouseButton(e)) {
-
-            //}
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-    }
 
     private Main() {
-
-
         onCreate();
 
         timetable.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                mainLayout.show(mainPane, String.valueOf(TIMETABLE_PANEL_INDEX));
             }
         });
         deadliner.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var deadlinesDialog = new DeadlinesDialog();
-                deadlinesDialog.pack();
-                deadlinesDialog.setModalityType(ModalityType.APPLICATION_MODAL);
-                deadlinesDialog.setVisible(true);
+                mainLayout.show(mainPane, String.valueOf(DEADLINES_PANEL_INDEX));
             }
         });
         alarms.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(viewedDayNumber == 5) {
-                    viewedDayNumber = 0;
-                    layout.first(timetablePanel);
-                }
-                else {
-                    viewedDayNumber++;
-                    layout.next(timetablePanel);
-                }
-                pack();
-            }
-        });
-        previous.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(viewedDayNumber==0){
-                    viewedDayNumber=5;
-                    layout.last(timetablePanel);
-                }
-                else{
-                    viewedDayNumber--;
-                    layout.previous(timetablePanel);
-                }
-                pack();
-            }
-        });
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
+                //TODO add alarms to the app
             }
         });
 
@@ -128,78 +38,53 @@ public class Main extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                dispose();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                dispose();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onCreate() {
+        deadlines = new ArrayList<>();
+
+        setTitle("Deadliner");
         setContentPane(contentPane);
+
+        mainLayout = new CardLayout();
+        mainPane = new JPanel();
+        mainPane.setLayout(mainLayout);
+
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
-        setPreferredSize(new Dimension(360, 600));
+        setPreferredSize(new Dimension(320, 500));
         setLayout(new BorderLayout());
-
-        week = new Week(new File(FILE_PATH));
-        dayPanels = new DayPanel[6];
-        for (int i = 0; i < NUMBER_OF_CLASSES; i++) {
-            dayPanels[i] = new DayPanel(week, i);
-        }
-
-        layout = new CardLayout();
-        timetablePanel = new JPanel(layout);
-        for(int i = 0;i < NUMBER_OF_CLASSES;i++)
-        {
-            timetablePanel.add(dayPanels[i], String.valueOf(i));
-        }
-        add(timetablePanel, BorderLayout.CENTER);
-
-        if (dayOfTheWeek == 1) {
-            layout.first(timetablePanel);
-            viewedDayNumber = 0;
-        } else {
-            layout.show(timetablePanel, String.valueOf(dayOfTheWeek - 2));
-            viewedDayNumber = dayOfTheWeek - 2;
-        }
-
-        var turnButtonSPanel = new JPanel();
-        turnButtonSPanel.setLayout(new GridLayout(1, 2));
-        turnButtonSPanel.setPreferredSize(new Dimension(300, 50));
-        next = new Button(">");
-        previous = new Button("<");
-        turnButtonSPanel.add(previous);
-        turnButtonSPanel.add(next);
-        add(turnButtonSPanel, BorderLayout.SOUTH);
 
         var menuBar = new JMenuBar();
         timetable = new JMenuItem("Timetable");
-        deadliner = new JMenuItem("Deadliner");
+        deadliner = new JMenuItem("Deadlines");
         alarms = new JMenuItem("Alarms");
         menuBar.add(timetable);
         menuBar.add(deadliner);
         menuBar.add(alarms);
+        timetable.setMnemonic(KeyEvent.VK_T);
+        deadliner.setMnemonic(KeyEvent.VK_D);
+        alarms.setMnemonic(KeyEvent.VK_A);
         setJMenuBar(menuBar);
 
+        var timetablePanel = new TimetablePanel(FILE_PATH);
+        var deadlinesPanel = new DeadlinesPanel();
+        mainPane.add(timetablePanel, String.valueOf(TIMETABLE_PANEL_INDEX));
+        mainPane.add(deadlinesPanel, String.valueOf(DEADLINES_PANEL_INDEX));
+        mainLayout.first(mainPane);
+
+        add(mainPane, BorderLayout.CENTER);
         pack();
-    }
-
-    private void onOK() {
-        //TODO add your code here
-        dispose();
-    }
-
-    private void onCancel() {
-        //TODO add your code here if necessary
-        dispose();
     }
 
     public static void main(String[] args) {
@@ -213,20 +98,19 @@ public class Main extends JDialog {
         });
     }
 
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private Calendar calendar = Calendar.getInstance();
-    private int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    private JPanel contentPane, mainPane;
+    static Calendar calendar = Calendar.getInstance();
+
     static final int NUMBER_OF_CLASSES = 6;
+    private final int
+            TIMETABLE_PANEL_INDEX = 1,
+            DEADLINES_PANEL_INDEX = 2;
     static final String[] CLASSES_TIME = {"08:15-09:35", "09:45-11:05", "11:15-12:35", "13:00-14:20", "14:20-15:50", "19:30-21:45"};
     private static final String FILE_PATH = "src/timetable.txt";
-    static int viewedDayNumber;
-    private DayPanel[] dayPanels;
-    private Button next, previous;
-    private JMenuItem timetable, deadliner, alarms;
-    private JRadioButton showMenu;
-    private JPanel timetablePanel;
-    private CardLayout layout;
-    static ArrayList<Deadline> deadlines = new ArrayList<>();
+    private JMenuItem
+            timetable,
+            deadliner,
+            alarms;
+    static ArrayList<Deadline> deadlines;
+    private CardLayout mainLayout;
 }
