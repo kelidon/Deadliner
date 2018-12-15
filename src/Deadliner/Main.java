@@ -24,7 +24,6 @@ public class Main extends JDialog {
                 subjectButtons[i] = new SubjectButton(week.classes[day][i], i, day);
                 add(subjectButtons[i]);
                 subjectButtons[i].addMouseListener(this);
-
             }
         }
 
@@ -79,10 +78,10 @@ public class Main extends JDialog {
                 deadlinesDialog.setVisible(true);
             }
         });
-        showMenu.addActionListener(new ActionListener() {
+        alarms.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                add(menuPanel, BorderLayout.WEST);
+
             }
         });
         next.addActionListener(new ActionListener() {
@@ -147,7 +146,7 @@ public class Main extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        setPreferredSize(new Dimension(400, 600));
+        setPreferredSize(new Dimension(360, 600));
         setLayout(new BorderLayout());
 
         week = new Week(new File(FILE_PATH));
@@ -181,22 +180,14 @@ public class Main extends JDialog {
         turnButtonSPanel.add(next);
         add(turnButtonSPanel, BorderLayout.SOUTH);
 
-        var navPanel = new JPanel();
-        navPanel.setLayout(new GridLayout(1, 5));
-        navPanel.setPreferredSize(new Dimension(300, 35));
-        menuIcon = new ImageIcon(menuIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
-        showMenu = new JRadioButton(menuIcon);
-        navPanel.add(showMenu);
-        add(navPanel, BorderLayout.NORTH);
-
-        menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(8, 1));
-        menuPanel.setPreferredSize(new Dimension(80, 600));
-        timetable = new Button("Timetable");
-        deadliner = new Button("Deadliner");
-        menuPanel.add(timetable);
-        menuPanel.add(deadliner);
-        add(menuPanel, BorderLayout.WEST);
+        var menuBar = new JMenuBar();
+        timetable = new JMenuItem("Timetable");
+        deadliner = new JMenuItem("Deadliner");
+        alarms = new JMenuItem("Alarms");
+        menuBar.add(timetable);
+        menuBar.add(deadliner);
+        menuBar.add(alarms);
+        setJMenuBar(menuBar);
 
         pack();
     }
@@ -232,9 +223,10 @@ public class Main extends JDialog {
     private static final String FILE_PATH = "src/timetable.txt";
     static int viewedDayNumber;
     private DayPanel[] dayPanels;
-    private Button next, previous, timetable, deadliner;
+    private Button next, previous;
+    private JMenuItem timetable, deadliner, alarms;
     private JRadioButton showMenu;
-    private JPanel menuPanel, timetablePanel;
+    private JPanel timetablePanel;
     private CardLayout layout;
     static ArrayList<Deadline> deadlines = new ArrayList<>();
 }
