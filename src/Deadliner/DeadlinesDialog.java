@@ -3,42 +3,40 @@ package Deadliner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class DeadlinesDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JRadioButton back, add;
-    static HashSet<Deadline> deadlines = new HashSet<>();
+    private TextArea deadlinesArea = new TextArea();
 
-    public DeadlinesDialog() {
+    DeadlinesDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setLayout(new BorderLayout());
 
-        var scrollPane = new JScrollPane();
-        add(scrollPane, BorderLayout.CENTER);
-        if(!deadlines.isEmpty()){
-            for(var deadline: deadlines){
-                add(new TextField(deadline.getInfo()+"\t"+ deadline.getDeadlineDate().toString()));
-            }
-        }
+        var centralPane = new JPanel();
+        centralPane.add(deadlinesArea);
+        add(centralPane, BorderLayout.CENTER);
+        showDeadlines();
 
         var navPanel = new JPanel();
         navPanel.setLayout(new GridLayout(1,5));
         navPanel.setPreferredSize(new Dimension(300,35));
 
         Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
-        back = new JRadioButton(Main.backIcon);
+        var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
 
         Main.addIcon = new ImageIcon(Main.addIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
-        add = new JRadioButton(Main.addIcon);
+        var add = new JRadioButton(Main.addIcon);
         navPanel.add(add);
         add(navPanel, BorderLayout.NORTH);
 
+        deadlinesArea.setEditable(false);
+        deadlinesArea.setPreferredSize(new Dimension(250,200));
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,11 +50,7 @@ public class DeadlinesDialog extends JDialog {
                 addDeadline.pack();
                 addDeadline.setModalityType(ModalityType.APPLICATION_MODAL);
                 addDeadline.setVisible(true);
-                if(!deadlines.isEmpty()){
-                    for(var deadline: deadlines){
-                        add(new TextField(deadline.getInfo()+"\t"+ deadline.getDeadlineDate().toString()));
-                    }
-                }
+                showDeadlines();
             }
         });
         buttonOK.addActionListener(new ActionListener() {
@@ -85,6 +79,18 @@ public class DeadlinesDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+    private void showDeadlines(){
+        deadlinesArea.setText("");
+        if(!Main.deadlines.isEmpty()){
+            for(var deadline: Main.deadlines){
+                //scrollPane.
+                        deadlinesArea.append(deadline.getInfo() +
+                        "\t" +
+                        String.format("%te %<tB %<tY", deadline.getDeadlineDate()) +
+                        "\n");
+            }
+        }
     }
 
     private void onOK() {

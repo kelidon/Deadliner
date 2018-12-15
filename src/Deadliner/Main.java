@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Main extends JDialog {
@@ -23,7 +24,7 @@ public class Main extends JDialog {
                 subjectButtons[i] = new SubjectButton(week.classes[day][i], i, day);
                 add(subjectButtons[i]);
                 subjectButtons[i].addMouseListener(this);
-                
+
             }
         }
 
@@ -235,4 +236,5 @@ public class Main extends JDialog {
     private JRadioButton showMenu;
     private JPanel menuPanel, timetablePanel;
     private CardLayout layout;
+    static ArrayList<Deadline> deadlines = new ArrayList<>();
 }

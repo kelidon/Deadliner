@@ -44,7 +44,7 @@ public class AddDeadlineDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    DeadlinesDialog.deadlines.add(new Deadline(info.getText(),
+                    Main.deadlines.add(new Deadline(info.getText(),
                             new Date(Integer.parseInt(year.getText()),
                                     Integer.parseInt(month.getText()),
                                     Integer.parseInt(day.getText()))));
