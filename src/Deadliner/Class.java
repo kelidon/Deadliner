@@ -58,14 +58,16 @@ public class Class {
         this.classType = classType;
     }
 
-    void setFromString(String classInfo){
+    public static Class fromString(String classInfo){
         Scanner scanner = new Scanner(classInfo);
-        this.subject = scanner.next();
-        this.room = scanner.next();
-        if(room.equals("0"))
-            room = "";
-        this.classType = scanner.next();
-        this.note = "";
+        Class aClass = new Class();
+        aClass.subject = scanner.next();
+        aClass.room = scanner.next();
+        if(aClass.room.equals("0"))
+            aClass.room = "";
+        aClass.classType = scanner.next();
+
+        return aClass;
     }
 
     private String subject;

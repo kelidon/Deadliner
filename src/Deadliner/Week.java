@@ -1,7 +1,5 @@
 package Deadliner;
 
-import Deadliner.Class;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -41,8 +39,7 @@ public class Week {
                 if (!temp.equals("&")) {
                     while (!temp.equals("&")) {
                         if (!temp.equals("_")) {
-                            classes[indexDays][indexClasses] = new Class();
-                            classes[indexDays][indexClasses].setFromString(temp);
+                            classes[indexDays][indexClasses] = Class.fromString(temp);
                             if(indexClasses<4)
                                 classes[indexDays][indexClasses].setTime(Main.CLASSES_TIME[indexClasses]);
                             else if(classes[indexDays][indexClasses].getClassType().equals("str"))
