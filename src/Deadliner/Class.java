@@ -13,6 +13,7 @@ public class Class {
         this.room = "";
         this.classType = "regular";
         this.note = "";
+        this.time = "";
     }
 
     public Class(String subject, String room, String classType) {
