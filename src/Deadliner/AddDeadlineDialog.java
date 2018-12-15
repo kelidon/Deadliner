@@ -7,33 +7,34 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
 
+import static Deadliner.Main.ICON_SIZE;
+
 public class AddDeadlineDialog extends JDialog {
 
     AddDeadlineDialog() {
-        setTitle("Add a deadline");
+        setTitle(ADD_DIALOG_TITLE);
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setPreferredSize(new Dimension(250, 400));
+        setPreferredSize(ADD_DIALOG_DIM);
         setLayout(new BorderLayout());
 
         var navPanel = new JPanel();
-        navPanel.setPreferredSize(new Dimension(250,45));
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
+        navPanel.setPreferredSize(NAV_PANEL_DIM);
+        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
-        add(navPanel, BorderLayout.NORTH);
+        add(navPanel, BorderLayout.SOUTH);
 
         TextField
                 day = new TextField(),
                 month = new TextField(),
                 year = new TextField();
         var info = new TextArea();
-        var tempDimension = new Dimension(70, 20);
+        var tempDimension = new Dimension(DATE_FIELDS_DIM);
         month.setPreferredSize(tempDimension);
         year.setPreferredSize(tempDimension);
         day.setPreferredSize(tempDimension);
-        info.setPreferredSize(new Dimension(219, 280));
+        info.setPreferredSize(INFO_DIM);
 
         var centralPane = new JPanel();
         centralPane.add(day);
@@ -70,5 +71,10 @@ public class AddDeadlineDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private JPanel contentPane;
-    private JButton buttonOK;
+    private final Dimension
+            ADD_DIALOG_DIM = new Dimension(250,400),
+            NAV_PANEL_DIM = new Dimension(250,50),
+            DATE_FIELDS_DIM = new Dimension(70, 20),
+            INFO_DIM = new Dimension(219, 280);
+    private final String ADD_DIALOG_TITLE = "Add a deadline";
 }

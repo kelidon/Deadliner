@@ -5,27 +5,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DeadlinesPanel extends JPanel{
-    private TextArea deadlinesArea = new TextArea();
+import static Deadliner.Main.ICON_SIZE;
+
+class DeadlinesPanel extends JPanel{
+
     DeadlinesPanel(){
         this.setLayout(new BorderLayout());
-
+        deadlinesArea = new TextArea();
         var centralPane = new JPanel();
         centralPane.add(deadlinesArea);
         this.add(centralPane, BorderLayout.CENTER);
         this.showDeadlines();
 
         var navPanel = new JPanel();
-        navPanel.setPreferredSize(new Dimension(350,45));
+        navPanel.setPreferredSize(NAV_PANEL_DIM);
 
-        Main.addIcon = new ImageIcon(Main.addIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
+        Main.addIcon = new ImageIcon(Main.addIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var add = new JRadioButton(Main.addIcon);
 
         navPanel.add(add);
-        this.add(navPanel, BorderLayout.NORTH);
+        this.add(navPanel, BorderLayout.SOUTH);
 
         deadlinesArea.setEditable(false);
-        deadlinesArea.setPreferredSize(new Dimension(280,350));
+        deadlinesArea.setPreferredSize(DEADLINES_AREA_DIM);
 
         add.addActionListener(new ActionListener() {
             @Override
@@ -50,4 +52,8 @@ public class DeadlinesPanel extends JPanel{
         }
     }
 
+    private TextArea deadlinesArea;
+    private final Dimension
+            NAV_PANEL_DIM = new Dimension(350,50),
+            DEADLINES_AREA_DIM = new Dimension(280,380);
 }

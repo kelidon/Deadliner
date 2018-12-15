@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Main extends JDialog {
-    static ImageIcon
-            //menuIcon = new ImageIcon("image/menu.png"),
-            backIcon = new ImageIcon("image/back.png"),
-            addIcon = new ImageIcon("image/add.png");
 
     private Main() {
         onCreate();
@@ -53,7 +49,10 @@ public class Main extends JDialog {
     private void onCreate() {
         deadlines = new ArrayList<>();
 
-        setTitle("Deadliner");
+        //menuIcon = new ImageIcon(MENU_PNG_FILEPATH);
+        backIcon = new ImageIcon(BACK_PNG_FILEPATH);
+        addIcon = new ImageIcon(ADD_PNG_FILEPATH);
+        setTitle(APP_TITLE);
         setContentPane(contentPane);
 
         mainLayout = new CardLayout();
@@ -62,13 +61,13 @@ public class Main extends JDialog {
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModal(true);
-        setPreferredSize(new Dimension(320, 500));
+        setPreferredSize(APP_DIMENSION);
         setLayout(new BorderLayout());
 
         var menuBar = new JMenuBar();
-        timetable = new JMenuItem("Timetable");
-        deadliner = new JMenuItem("Deadlines");
-        alarms = new JMenuItem("Alarms");
+        timetable = new JMenuItem(MENU_ITEMS_NAMES[0]);
+        deadliner = new JMenuItem(MENU_ITEMS_NAMES[1]);
+        alarms = new JMenuItem(MENU_ITEMS_NAMES[2]);
         menuBar.add(timetable);
         menuBar.add(deadliner);
         menuBar.add(alarms);
@@ -101,7 +100,8 @@ public class Main extends JDialog {
     private JPanel contentPane, mainPane;
     static Calendar calendar = Calendar.getInstance();
 
-    static final int NUMBER_OF_CLASSES = 6;
+    static final int NUMBER_OF_CLASSES = 6,
+            ICON_SIZE = 35;
     private final int
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2;
@@ -113,4 +113,15 @@ public class Main extends JDialog {
             alarms;
     static ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
+    private final Dimension APP_DIMENSION = new Dimension(320, 500);
+    static ImageIcon
+            //menuIcon,
+            backIcon,
+            addIcon;
+    private final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
+    private  final String
+            APP_TITLE = "Deadliner",
+            BACK_PNG_FILEPATH = "image/back.png",
+            ADD_PNG_FILEPATH = "image/add.png",
+            MENU_PNG_FILEPATH = "image/menu.png";
 }

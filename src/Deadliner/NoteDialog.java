@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static Deadliner.Main.ICON_SIZE;
 import static Deadliner.TimetablePanel.week;
 
 public class NoteDialog extends JDialog {
@@ -11,20 +12,18 @@ public class NoteDialog extends JDialog {
     public NoteDialog(int subjectIndex) {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setPreferredSize(new Dimension(250, 350));
+        setPreferredSize(NOTE_DIALOG_DIM);
         setLayout(new BorderLayout());
 
         var navPanel = new JPanel();
-        navPanel.setLayout(new GridLayout(1,5));
-        navPanel.setPreferredSize(new Dimension(250,45));
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH));
+        navPanel.setPreferredSize(NAV_PANEL_DIM);
+        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
-        add(navPanel, BorderLayout.NORTH);
+        add(navPanel, BorderLayout.SOUTH);
 
         var note = new TextArea();
-        note.setPreferredSize(new Dimension(211, 230));
+        note.setPreferredSize(NOTE_AREA_DIM);
         note.setText(week.classes[TimetablePanel.viewedDayNumber][subjectIndex].getNote());
 
         Class clicked = week.classes[TimetablePanel.viewedDayNumber][subjectIndex];
@@ -68,5 +67,8 @@ public class NoteDialog extends JDialog {
     }
 
     private JPanel contentPane;
-    private JButton buttonOK;
+    private final Dimension
+            NOTE_DIALOG_DIM = new Dimension(250,350),
+            NAV_PANEL_DIM = new Dimension(250,50),
+            NOTE_AREA_DIM = new Dimension(211, 230);
 }
