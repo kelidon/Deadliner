@@ -12,7 +12,7 @@ public class SubjectButton extends JButton {
         this.room = lesson.getRoom();
         this.index = index;
 
-        setBorder(new RoundedBorder(25));
+        setBorder(new RoundedBorder(BORDER_RADIUS));
         setLayout(new GridBagLayout());
 
         var constraints = new GridBagConstraints();
@@ -79,4 +79,5 @@ public class SubjectButton extends JButton {
 
     private String time, name, room;
     private int index;
+    private final int BORDER_RADIUS = 25;
 }
