@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.time.DayOfWeek;
 import java.util.Calendar;
 
 import static Deadliner.Main.NUMBER_OF_CLASSES;
@@ -41,17 +42,24 @@ class TimetablePanel extends JPanel {
         var turnButtonSPanel = new JPanel();
 
         turnButtonSPanel.setPreferredSize(TURN_DIM);
-        turnButtonSPanel.setLayout(new GridLayout(1,2));
+        turnButtonSPanel.setLayout(new GridLayout(1,3));
+
         var next = new JButton(Main.rightIcon);
         next.setOpaque(false);
         next.setContentAreaFilled(false);
         next.setBorderPainted(false);
+
         var previous = new JButton(Main.leftIcon);
         previous.setOpaque(false);
         previous.setContentAreaFilled(false);
         previous.setBorderPainted(false);
-        turnButtonSPanel.add(previous, BorderLayout.WEST);
-        turnButtonSPanel.add(next, BorderLayout.EAST);
+
+        var dayOfWeekLabel = new JLabel( DayOfWeek.of(viewedDayNumber + 1).toString() );
+
+        turnButtonSPanel.add(previous);
+        turnButtonSPanel.add(dayOfWeekLabel);
+        turnButtonSPanel.add(next);
+
         this.add(turnButtonSPanel, BorderLayout.SOUTH);
 
         next.addActionListener(new ActionListener() {
@@ -65,6 +73,7 @@ class TimetablePanel extends JPanel {
                     viewedDayNumber++;
                     layout.next(subjectSPane);
                 }
+                dayOfWeekLabel.setText( DayOfWeek.of(viewedDayNumber + 1).toString() );
             }
         });
         previous.addActionListener(new ActionListener() {
@@ -78,6 +87,7 @@ class TimetablePanel extends JPanel {
                     viewedDayNumber--;
                     layout.previous(subjectSPane);
                 }
+                dayOfWeekLabel.setText( DayOfWeek.of(viewedDayNumber + 1).toString() );
             }
         });
     }
