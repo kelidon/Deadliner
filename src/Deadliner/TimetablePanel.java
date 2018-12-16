@@ -9,9 +9,9 @@ import java.util.Calendar;
 
 import static Deadliner.Main.NUMBER_OF_CLASSES;
 
-public class TimetablePanel extends JPanel {
+class TimetablePanel extends JPanel {
 
-    public TimetablePanel(String timetableFilePath) {
+    TimetablePanel(String timetableFilePath) {
 
         this.setLayout(new BorderLayout());
 
@@ -40,11 +40,18 @@ public class TimetablePanel extends JPanel {
 
         var turnButtonSPanel = new JPanel();
 
-        turnButtonSPanel.setPreferredSize(new Dimension(300, 50));
-        var next = new JRadioButton(Main.rightIcon);
-        var previous = new JRadioButton(Main.leftIcon);
-        turnButtonSPanel.add(previous);
-        turnButtonSPanel.add(next);
+        turnButtonSPanel.setPreferredSize(TURN_DIM);
+        turnButtonSPanel.setLayout(new GridLayout(1,2));
+        var next = new JButton(Main.rightIcon);
+        next.setOpaque(false);
+        next.setContentAreaFilled(false);
+        next.setBorderPainted(false);
+        var previous = new JButton(Main.leftIcon);
+        previous.setOpaque(false);
+        previous.setContentAreaFilled(false);
+        previous.setBorderPainted(false);
+        turnButtonSPanel.add(previous, BorderLayout.WEST);
+        turnButtonSPanel.add(next, BorderLayout.EAST);
         this.add(turnButtonSPanel, BorderLayout.SOUTH);
 
         next.addActionListener(new ActionListener() {
@@ -76,4 +83,5 @@ public class TimetablePanel extends JPanel {
     }
     static int viewedDayNumber;
     static Week week;
+    private final Dimension TURN_DIM = new Dimension(300, 50);
 }

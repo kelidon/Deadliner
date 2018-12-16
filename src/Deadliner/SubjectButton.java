@@ -5,14 +5,14 @@ import java.awt.*;
 
 public class SubjectButton extends JButton {
 
-    public SubjectButton(Class lesson, int index, int viewedDay) {
+    public SubjectButton(Class lesson, int index) {
         super();
         this.time = lesson.getTime();
         this.name = lesson.getSubject();
         this.room = lesson.getRoom();
         this.index = index;
 
-        setBorder(new RoundedBorder(BORDER_RADIUS));
+        setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH));
         setLayout(new GridBagLayout());
 
         var constraints = new GridBagConstraints();
@@ -79,8 +79,13 @@ public class SubjectButton extends JButton {
         this.index = index;
     }
 
-    private String time, name, room;
+    private String
+            time,
+            name,
+            room;
     private int index;
-    private final int BORDER_RADIUS = 25;
+    private final int
+            BORDER_RADIUS = 25,
+            BORDER_WIDTH = 2;
 
 }

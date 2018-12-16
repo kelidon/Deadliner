@@ -15,7 +15,7 @@ class DayPanel extends JPanel implements MouseListener {
         setLayout(new GridLayout(NUMBER_OF_CLASSES, 1));
         setPreferredSize(new Dimension(300, 500));
         for (int i = 0; i < NUMBER_OF_CLASSES; i++) {
-            subjectButtons[i] = new SubjectButton(week.classes[day][i], i, day);
+            subjectButtons[i] = new SubjectButton(week.classes[day][i], i);
             add(subjectButtons[i]);
             subjectButtons[i].addMouseListener(this);
         }

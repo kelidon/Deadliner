@@ -22,7 +22,6 @@ class DeadlinesPanel extends JPanel{
 
         var add = new JRadioButton(Main.addIcon);
         navPanel.add(add);
-        
         this.add(navPanel, BorderLayout.SOUTH);
 
         deadlinesArea.setEditable(false);
