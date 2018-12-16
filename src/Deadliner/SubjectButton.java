@@ -80,4 +80,5 @@ public class SubjectButton extends JButton {
     private String time, name, room;
     private int index;
     private final int BORDER_RADIUS = 25;
+
 }
