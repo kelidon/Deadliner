@@ -10,11 +10,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URI;
 
+import static Deadliner.Main.*;
+
 public class AlarmsPanel extends JPanel {
-    private Clip clip;
+
     AlarmsPanel(){
         super();
-
         try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/031100.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
@@ -23,34 +24,27 @@ public class AlarmsPanel extends JPanel {
             System.out.println(exc.getMessage());
         }
 
-        JButton button = new JButton("play");
-        add(button);
-        button.addActionListener(new ActionListener() {
+        var playPause = new JRadioButton(playIcon);
+        playPause.setSelectedIcon(pauseIcon);
+        playPause.setSelected(true);
+        add(playPause);
+        playPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (clip == null){
+                if (clip == null) {
                     System.out.println("audio file is not openned");
-                    return;
                 }
-                clip.start();
+                else {
+                    if (playPause.isSelected())
+                        clip.start();
+                    else
+                        clip.stop();
+                }
             }
         });
-        button = new JButton("stop");
-        add(button);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (clip == null){
-                    System.out.println("audio file is not openned");
-                    return;
-                }
-                clip.stop();
-            }
-        });
-
-        button = new JButton("music author");
-        add(button);
-        button.addActionListener(new ActionListener() {
+        var linkButton = new JRadioButton(httpIcon);
+        add(linkButton);
+        linkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -60,5 +54,7 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         });
+
     }
+    private Clip clip;
 }
