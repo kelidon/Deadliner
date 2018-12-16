@@ -3,8 +3,10 @@ package Deadliner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Main extends JDialog {
 
@@ -70,9 +72,12 @@ public class Main extends JDialog {
         timetable = new JMenuItem(MENU_ITEMS_NAMES[0]);
         deadliner = new JMenuItem(MENU_ITEMS_NAMES[1]);
         alarms = new JMenuItem(MENU_ITEMS_NAMES[2]);
+        var day = new JMenuItem(new SimpleDateFormat("EEE").format(new Date()));
+        //day.setBackground(Color.darkGray);
         menuBar.add(timetable);
         menuBar.add(deadliner);
         menuBar.add(alarms);
+        menuBar.add(day);
         timetable.setMnemonic(KeyEvent.VK_T);
         deadliner.setMnemonic(KeyEvent.VK_D);
         alarms.setMnemonic(KeyEvent.VK_A);
@@ -117,6 +122,14 @@ public class Main extends JDialog {
                 "13:00<br>14:20",
                 "14:20<br>15:50",
                 "19:30<br>21:45"
+    };
+    static final String[] DAYS = {
+            "Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг",
+            "Пятница",
+            "Суббота"
     };
     private static final String FILE_PATH = "src/timetable.txt";
     private JMenuItem

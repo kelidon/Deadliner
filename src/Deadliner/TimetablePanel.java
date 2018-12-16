@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Calendar;
 
+import static Deadliner.Main.DAYS;
 import static Deadliner.Main.NUMBER_OF_CLASSES;
 
 class TimetablePanel extends JPanel {
@@ -22,24 +23,42 @@ class TimetablePanel extends JPanel {
         }
 
         var layout = new CardLayout();
-        var subjectSPane = new JPanel(layout);
+        var dayPanel = new JPanel(layout);
         for(int i = 0;i < NUMBER_OF_CLASSES;i++)
         {
-            subjectSPane.add(dayPanels[i], String.valueOf(i));
+            dayPanel.add(dayPanels[i], String.valueOf(i));
         }
-        this.add(subjectSPane, BorderLayout.CENTER);
+        this.add(dayPanel, BorderLayout.CENTER);
 
         int dayOfTheWeek = Main.calendar.get(Calendar.DAY_OF_WEEK);
         if (dayOfTheWeek == 1) {
-            layout.first(subjectSPane);
+            layout.first(dayPanel);
             viewedDayNumber = 0;
         } else {
-            layout.show(subjectSPane, String.valueOf(dayOfTheWeek - 2));
+            layout.show(dayPanel, String.valueOf(dayOfTheWeek - 2));
             viewedDayNumber = dayOfTheWeek - 2;
         }
 
-        var turnButtonSPanel = new JPanel();
 
+        var currDayPanel = new JPanel();
+        //currDayPanel.setBackground(Color.white);
+//        currDayPanel.setLayout(new GridBagLayout());
+        //var constraints = new GridBagConstraints();
+//        constraints.anchor = GridBagConstraints.NORTHEAST;
+//        constraints.gridx = GridBagConstraints.RELATIVE;
+//        constraints.weightx = 1;
+//        constraints.gridy = 0;
+//        constraints.fill = GridBagConstraints.NONE;
+        //var dayLabel = new JLabel(DAYS[viewedDayNumber]);
+        //dayLabel.setForeground(Color.white);
+        //dayLabel.setBackground(Color.darkGray);
+
+        dayLabel = new JLabel(DAYS[viewedDayNumber]);
+        dayLabel.setBackground(Color.white);
+        currDayPanel.add(dayLabel);
+        this.add(currDayPanel, BorderLayout.NORTH);
+
+        var turnButtonSPanel = new JPanel();
         turnButtonSPanel.setPreferredSize(TURN_DIM);
         turnButtonSPanel.setLayout(new GridLayout(1,2));
         var next = new JButton(Main.rightIcon);
@@ -59,12 +78,13 @@ class TimetablePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(viewedDayNumber == 5) {
                     viewedDayNumber = 0;
-                    layout.first(subjectSPane);
+                    layout.first(dayPanel);
                 }
                 else {
                     viewedDayNumber++;
-                    layout.next(subjectSPane);
+                    layout.next(dayPanel);
                 }
+                dayLabel.setText(DAYS[viewedDayNumber]);
             }
         });
         previous.addActionListener(new ActionListener() {
@@ -72,16 +92,18 @@ class TimetablePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(viewedDayNumber==0){
                     viewedDayNumber=5;
-                    layout.last(subjectSPane);
+                    layout.last(dayPanel);
                 }
                 else{
                     viewedDayNumber--;
-                    layout.previous(subjectSPane);
+                    layout.previous(dayPanel);
                 }
+                dayLabel.setText(DAYS[viewedDayNumber]);
             }
         });
     }
     static int viewedDayNumber;
     static Week week;
     private final Dimension TURN_DIM = new Dimension(300, 50);
+    private JLabel dayLabel;
 }
