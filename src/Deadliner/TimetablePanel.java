@@ -60,7 +60,7 @@ class TimetablePanel extends JPanel {
 
         var turnButtonSPanel = new JPanel();
         turnButtonSPanel.setPreferredSize(TURN_DIM);
-        turnButtonSPanel.setLayout(new GridLayout(1,3));
+        turnButtonSPanel.setLayout(new GridLayout(1,2));
 
         var next = new JButton(Main.rightIcon);
         next.setOpaque(false);
