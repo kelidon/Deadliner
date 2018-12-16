@@ -16,6 +16,8 @@ public class AlarmsPanel extends JPanel {
 
     AlarmsPanel(){
         super();
+        setLayout(new GridLayout(8,1));
+        var musicPanel = new JPanel();
         try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/031100.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
@@ -27,7 +29,7 @@ public class AlarmsPanel extends JPanel {
         var playPause = new JRadioButton(playIcon);
         playPause.setSelectedIcon(pauseIcon);
         playPause.setSelected(true);
-        add(playPause);
+        musicPanel.add(playPause);
         playPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,7 +45,7 @@ public class AlarmsPanel extends JPanel {
             }
         });
         var linkButton = new JRadioButton(httpIcon);
-        add(linkButton);
+        musicPanel.add(linkButton);
         linkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +56,24 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         });
-
+        var timerPanel = new JPanel();
+        var timerField = new JTextField();
+        timerField.setPreferredSize(TIMER_DIM);
+        timerPanel.add(timerField);
+        var submitButton = new JButton("Submit");
+        timerPanel.add(submitButton);
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!timerField.getText().equals("")) {
+                    var timer = new Timer(Integer.parseInt(timerField.getText())*1000, playPause.getActionListeners()[0]);
+                    timer.start();
+                }
+            }
+        });
+        add(musicPanel);
+        add(timerPanel);
     }
     private Clip clip;
+    private Dimension TIMER_DIM = new Dimension(40,27);
 }
