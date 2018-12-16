@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.time.DayOfWeek;
 import java.util.Calendar;
 
 import static Deadliner.Main.DAYS;
@@ -73,10 +72,8 @@ class TimetablePanel extends JPanel {
         previous.setContentAreaFilled(false);
         previous.setBorderPainted(false);
 
-        var dayOfWeekLabel = new JLabel( DayOfWeek.of(viewedDayNumber + 1).toString() );
 
         turnButtonSPanel.add(previous);
-        turnButtonSPanel.add(dayOfWeekLabel);
         turnButtonSPanel.add(next);
 
         this.add(turnButtonSPanel, BorderLayout.SOUTH);

@@ -142,7 +142,9 @@ public class Main extends JDialog {
     static ImageIcon
             //menuIcon,
             backIcon,
-            addIcon;
+            addIcon,
+            rightIcon,
+            leftIcon;
     private final int
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2,
