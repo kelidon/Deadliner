@@ -18,7 +18,10 @@ public class RoundedBorder implements Border {
     }
 
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+        Graphics2D gr = (Graphics2D)g;
+        gr.setStroke(new BasicStroke(2));
+        gr.setColor((Color.GRAY).darker());
+        gr.drawRoundRect(x, y, width-1, height-2, radius, radius);
     }
 
     private int radius;

@@ -18,7 +18,6 @@ public class NoteDialog extends JDialog {
 
         var navPanel = new JPanel();
         navPanel.setPreferredSize(NAV_PANEL_DIM);
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
         add(navPanel, BorderLayout.SOUTH);

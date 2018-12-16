@@ -20,10 +20,9 @@ class DeadlinesPanel extends JPanel{
         var navPanel = new JPanel();
         navPanel.setPreferredSize(NAV_PANEL_DIM);
 
-        Main.addIcon = new ImageIcon(Main.addIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var add = new JRadioButton(Main.addIcon);
-
         navPanel.add(add);
+        
         this.add(navPanel, BorderLayout.SOUTH);
 
         deadlinesArea.setEditable(false);

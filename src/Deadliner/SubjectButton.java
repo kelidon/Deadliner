@@ -28,18 +28,20 @@ public class SubjectButton extends JButton {
 
         switch (lesson.getClassType()) {
             case "lecture": {
-                setBackground(Color.yellow);
+                setBackground(new Color(245,244,117));
                 break;
             }
             case "litklub": {
-                setBackground(Color.red);
+                setBackground(new Color(242,139,130));
                 break;
             }
             case "str": {
-                setBackground(Color.cyan);
+                setBackground(new Color(167,255, 235));
                 break;
             }
-
+            default:{
+                setBackground(Color.white);
+            }
         }
     }
 

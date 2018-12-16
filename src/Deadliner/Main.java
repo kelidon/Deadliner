@@ -52,6 +52,8 @@ public class Main extends JDialog {
         //menuIcon = new ImageIcon(MENU_PNG_FILEPATH);
         backIcon = new ImageIcon(BACK_PNG_FILEPATH);
         addIcon = new ImageIcon(ADD_PNG_FILEPATH);
+        rightIcon = new ImageIcon(RIGHT_PNG_FILEPATH);
+        leftIcon = new ImageIcon(LEFT_PNG_FILEPATH);
         setTitle(APP_TITLE);
         setContentPane(contentPane);
 
@@ -127,11 +129,15 @@ public class Main extends JDialog {
     static ImageIcon
             //menuIcon,
             backIcon,
-            addIcon;
+            addIcon,
+            rightIcon,
+            leftIcon;
     private final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
     private  final String
             APP_TITLE = "Deadliner",
             BACK_PNG_FILEPATH = "image/back.png",
             ADD_PNG_FILEPATH = "image/add.png",
-            MENU_PNG_FILEPATH = "image/menu.png";
+            MENU_PNG_FILEPATH = "image/menu.png",
+            RIGHT_PNG_FILEPATH = "image/right.png",
+            LEFT_PNG_FILEPATH = "image/left.png";
 }

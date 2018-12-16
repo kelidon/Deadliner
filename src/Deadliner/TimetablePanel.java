@@ -39,10 +39,10 @@ public class TimetablePanel extends JPanel {
         }
 
         var turnButtonSPanel = new JPanel();
-        turnButtonSPanel.setLayout(new GridLayout(1, 2));
+
         turnButtonSPanel.setPreferredSize(new Dimension(300, 50));
-        var next = new Button(">");
-        var previous = new Button("<");
+        var next = new JRadioButton(Main.rightIcon);
+        var previous = new JRadioButton(Main.leftIcon);
         turnButtonSPanel.add(previous);
         turnButtonSPanel.add(next);
         this.add(turnButtonSPanel, BorderLayout.SOUTH);
