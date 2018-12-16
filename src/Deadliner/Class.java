@@ -16,6 +16,7 @@ public class Class {
         this.subject    = subject;
         this.room       = room;
         this.classType  = classType;
+        this.time       = "";
     }
 
     public String getTime() {
