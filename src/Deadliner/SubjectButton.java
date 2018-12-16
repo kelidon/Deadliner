@@ -8,30 +8,27 @@ public class SubjectButton extends JButton {
     private int index;
     private final String space = "         ";
 
-    public SubjectButton(Class c, int index, int viewedDay) {
-        this.time = c.getTime();
-        this.name = c.getSubject();
-        this.room = c.getRoom();
+    public SubjectButton(Class lesson, int index, int viewedDay) {
+        this.time = lesson.getTime();
+        this.name = lesson.getSubject();
+        this.room = lesson.getRoom();
         this.index = index;
 
         setLayout(new GridLayout(1, 3));
-        add(new JLabel(time));
+        add(new JLabel("<html>" + time + "</html>"));
         add(new JLabel(space + name));
         add(new JLabel(space + room));
 
-        switch(c.getClassType()){
-            case "lecture":
-            {
+        switch (lesson.getClassType()) {
+            case "lecture": {
                 setBackground(Color.yellow);
                 break;
             }
-            case "litklub":
-            {
+            case "litklub": {
                 setBackground(Color.red);
                 break;
             }
-            case "str":
-            {
+            case "str": {
                 setBackground(Color.cyan);
                 break;
             }

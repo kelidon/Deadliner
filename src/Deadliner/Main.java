@@ -105,7 +105,14 @@ public class Main extends JDialog {
     private final int
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2;
-    static final String[] CLASSES_TIME = {"08:15-09:35", "09:45-11:05", "11:15-12:35", "13:00-14:20", "14:20-15:50", "19:30-21:45"};
+    static final String[] CLASSES_TIME = {
+            "08:15<br>09:35",
+            "09:45<br>11:05",
+            "11:15<br>12:35",
+            "13:00<br>14:20",
+            "14:20<br>15:50",
+            "19:30<br>21:45"
+    };
     private static final String FILE_PATH = "src/timetable.txt";
     private JMenuItem
             timetable,
