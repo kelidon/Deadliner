@@ -28,7 +28,6 @@ public class AlarmsPanel extends JPanel {
 
         var playPause = new JRadioButton(playIcon);
         playPause.setSelectedIcon(pauseIcon);
-        playPause.setSelected(true);
         musicPanel.add(playPause);
         playPause.addActionListener(new ActionListener() {
             @Override

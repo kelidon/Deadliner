@@ -20,10 +20,12 @@ public class SubjectButton extends JButton {
         constraints.weightx = 1;
         constraints.gridy = 0;
         constraints.fill = GridBagConstraints.NONE;
-        constraints.anchor = GridBagConstraints.CENTER;
 
+        constraints.anchor = GridBagConstraints.WEST;
         add(new JLabel("<html>" + time + "</html>"), constraints);
+        constraints.anchor = GridBagConstraints.CENTER;
         add(new JLabel(name), constraints);
+        constraints.anchor = GridBagConstraints.EAST;
         add(new JLabel(room), constraints);
 
         switch (lesson.getClassType()) {
