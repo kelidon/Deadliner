@@ -7,51 +7,47 @@ import java.util.Scanner;
  */
 
 public class Class {
-    private String subject, room, classType, note, time;
+
     Class(){
-        this.subject = "";
-        this.room = "";
-        this.classType = "regular";
-        this.note = "";
-        this.time = "";
+        this("", "", "regular");
     }
 
     public Class(String subject, String room, String classType) {
-        this.subject = subject;
-        this.room = room;
-        this.classType = classType;
+        this.subject    = subject;
+        this.room       = room;
+        this.classType  = classType;
     }
 
-    String getTime() {
+    public String getTime() {
         return time;
     }
 
-    void setTime(String time) {
-        this.time = time;
-    }
-
-    String getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    String getRoom() {
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    String getClassType() {
+    public String getClassType() {
         return classType;
     }
 
     public String getNote() {
         return note;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public void setNote(String note) {
@@ -61,13 +57,22 @@ public class Class {
     public void setClassType(String classType) {
         this.classType = classType;
     }
-    void setFromString(String classInfo){
+
+    public static Class fromString(String classInfo){
         Scanner scanner = new Scanner(classInfo);
-        this.subject = scanner.next();
-        this.room = scanner.next();
-        if(room.equals("0"))
-            room = "";
-        this.classType = scanner.next();
-        this.note = "";
+        Class aClass = new Class();
+        aClass.subject = scanner.next();
+        aClass.room = scanner.next();
+        if(aClass.room.equals("0"))
+            aClass.room = "";
+        aClass.classType = scanner.next();
+
+        return aClass;
     }
+
+    private String subject;
+    private String room;
+    private String classType;
+    private String note;
+    private String time;
 }
