@@ -20,7 +20,6 @@ public class AddDeadlineDialog extends JDialog {
 
         var navPanel = new JPanel();
         navPanel.setPreferredSize(NAV_PANEL_DIM);
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
         add(navPanel, BorderLayout.SOUTH);
@@ -47,7 +46,7 @@ public class AddDeadlineDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 try{
                     Main.deadlines.add(new Deadline(info.getText(),
-                            new Date(Integer.parseInt(year.getText()),
+                            new Date(Integer.parseInt(year.getText()) - YEAR_SHIFT,
                                     Integer.parseInt(month.getText()),
                                     Integer.parseInt(day.getText()))));
                 }catch(IllegalArgumentException exc){}
@@ -77,4 +76,5 @@ public class AddDeadlineDialog extends JDialog {
             DATE_FIELDS_DIM = new Dimension(70, 20),
             INFO_DIM = new Dimension(219, 280);
     private final String ADD_DIALOG_TITLE = "Add a deadline";
+    private final int YEAR_SHIFT = 1900;
 }

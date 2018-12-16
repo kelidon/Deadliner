@@ -3,8 +3,10 @@ package Deadliner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Main extends JDialog {
 
@@ -53,6 +55,8 @@ public class Main extends JDialog {
         //menuIcon = new ImageIcon(MENU_PNG_FILEPATH);
         backIcon = new ImageIcon(BACK_PNG_FILEPATH);
         addIcon = new ImageIcon(ADD_PNG_FILEPATH);
+        rightIcon = new ImageIcon(RIGHT_PNG_FILEPATH);
+        leftIcon = new ImageIcon(LEFT_PNG_FILEPATH);
         setTitle(APP_TITLE);
         setContentPane(contentPane);
 
@@ -69,9 +73,12 @@ public class Main extends JDialog {
         timetable = new JMenuItem(MENU_ITEMS_NAMES[0]);
         deadliner = new JMenuItem(MENU_ITEMS_NAMES[1]);
         alarms = new JMenuItem(MENU_ITEMS_NAMES[2]);
+        var day = new JMenuItem(new SimpleDateFormat("EEE").format(new Date()));
+        //day.setBackground(Color.darkGray);
         menuBar.add(timetable);
         menuBar.add(deadliner);
         menuBar.add(alarms);
+        menuBar.add(day);
         timetable.setMnemonic(KeyEvent.VK_T);
         deadliner.setMnemonic(KeyEvent.VK_D);
         alarms.setMnemonic(KeyEvent.VK_A);
@@ -89,6 +96,9 @@ public class Main extends JDialog {
         pack();
     }
 
+    static String convertTime(String time){
+        return time.replaceAll("<br>","-");
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -106,12 +116,20 @@ public class Main extends JDialog {
     static final int NUMBER_OF_CLASSES = 6,
             ICON_SIZE = 35;
     static final String[] CLASSES_TIME = {
-            "08:15<br>09:35",
-            "09:45<br>11:05",
-            "11:15<br>12:35",
-            "13:00<br>14:20",
-            "14:20<br>15:50",
-            "19:30<br>21:45"
+                "08:15<br>09:35",
+                "09:45<br>11:05",
+                "11:15<br>12:35",
+                "13:00<br>14:20",
+                "14:20<br>15:50",
+                "19:30<br>21:45"
+    };
+    static final String[] DAYS = {
+            "Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг",
+            "Пятница",
+            "Суббота"
     };
     private static final String FILE_PATH = "src/timetable.txt";
     private JMenuItem
@@ -120,7 +138,7 @@ public class Main extends JDialog {
             alarms;
     static ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
-    private final Dimension APP_DIMENSION = new Dimension(320, 500);
+    private final Dimension APP_DIMENSION = new Dimension(300, 500);
     static ImageIcon
             //menuIcon,
             backIcon,
@@ -134,5 +152,7 @@ public class Main extends JDialog {
             APP_TITLE = "Deadliner",
             BACK_PNG_FILEPATH = "image/back.png",
             ADD_PNG_FILEPATH = "image/add.png",
-            MENU_PNG_FILEPATH = "image/menu.png";
+            MENU_PNG_FILEPATH = "image/menu.png",
+            RIGHT_PNG_FILEPATH = "image/right.png",
+            LEFT_PNG_FILEPATH = "image/left.png";
 }

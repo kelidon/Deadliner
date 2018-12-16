@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import static Deadliner.Main.ICON_SIZE;
+import static Deadliner.Main.convertTime;
 import static Deadliner.TimetablePanel.week;
 
 public class NoteDialog extends JDialog {
@@ -17,7 +18,6 @@ public class NoteDialog extends JDialog {
 
         var navPanel = new JPanel();
         navPanel.setPreferredSize(NAV_PANEL_DIM);
-        Main.backIcon = new ImageIcon(Main.backIcon.getImage().getScaledInstance(ICON_SIZE,ICON_SIZE, Image.SCALE_SMOOTH));
         var back = new JRadioButton(Main.backIcon);
         navPanel.add(back);
         add(navPanel, BorderLayout.SOUTH);
@@ -31,7 +31,7 @@ public class NoteDialog extends JDialog {
         var notePanel = new JPanel();
         var tempSubject = new TextField(clicked.getSubject());
         var tempRoom = new TextField(clicked.getRoom());
-        var tempTime = new TextField(clicked.getTime());
+        var tempTime = new TextField(convertTime(clicked.getTime()));
         notePanel.add(tempRoom);
         notePanel.add(tempSubject);
         notePanel.add(tempTime);

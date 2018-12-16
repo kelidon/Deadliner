@@ -5,13 +5,14 @@ import java.awt.*;
 
 public class SubjectButton extends JButton {
 
-    public SubjectButton(Class lesson, int index, int viewedDay) {
+    public SubjectButton(Class lesson, int index) {
         super();
         this.time = lesson.getTime();
         this.name = lesson.getSubject();
         this.room = lesson.getRoom();
         this.index = index;
 
+        setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH));
         setLayout(new GridBagLayout());
 
         var constraints = new GridBagConstraints();
@@ -27,18 +28,20 @@ public class SubjectButton extends JButton {
 
         switch (lesson.getClassType()) {
             case "lecture": {
-                setBackground(Color.yellow);
+                setBackground(new Color(245,244,117));
                 break;
             }
             case "litklub": {
-                setBackground(Color.red);
+                setBackground(new Color(242,139,130));
                 break;
             }
             case "str": {
-                setBackground(Color.cyan);
+                setBackground(new Color(167,255, 235));
                 break;
             }
-
+            default:{
+                setBackground(Color.white);
+            }
         }
     }
 
@@ -76,6 +79,13 @@ public class SubjectButton extends JButton {
         this.index = index;
     }
 
-    private String time, name, room;
+    private String
+            time,
+            name,
+            room;
     private int index;
+    private final int
+            BORDER_RADIUS = 25,
+            BORDER_WIDTH = 2;
+
 }
