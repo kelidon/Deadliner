@@ -29,6 +29,7 @@ public class Main extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO add alarms to the app
+                mainLayout.show(mainPane, String.valueOf(ALARMS_PANEL_INDEX));
             }
         });
 
@@ -85,8 +86,10 @@ public class Main extends JDialog {
 
         var timetablePanel = new TimetablePanel(FILE_PATH);
         var deadlinesPanel = new DeadlinesPanel();
+        var alarmsPanel = new AlarmsPanel();
         mainPane.add(timetablePanel, String.valueOf(TIMETABLE_PANEL_INDEX));
         mainPane.add(deadlinesPanel, String.valueOf(DEADLINES_PANEL_INDEX));
+        mainPane.add(alarmsPanel, String.valueOf(ALARMS_PANEL_INDEX));
         mainLayout.first(mainPane);
 
         add(mainPane, BorderLayout.CENTER);
@@ -108,13 +111,10 @@ public class Main extends JDialog {
     }
 
     private JPanel contentPane, mainPane;
-    static Calendar calendar = Calendar.getInstance();
+    public static Calendar calendar = Calendar.getInstance();
 
     static final int NUMBER_OF_CLASSES = 6,
             ICON_SIZE = 35;
-    private final int
-            TIMETABLE_PANEL_INDEX = 1,
-            DEADLINES_PANEL_INDEX = 2;
     static final String[] CLASSES_TIME = {
                 "08:15<br>09:35",
                 "09:45<br>11:05",
@@ -142,9 +142,11 @@ public class Main extends JDialog {
     static ImageIcon
             //menuIcon,
             backIcon,
-            addIcon,
-            rightIcon,
-            leftIcon;
+            addIcon;
+    private final int
+            TIMETABLE_PANEL_INDEX = 1,
+            DEADLINES_PANEL_INDEX = 2,
+            ALARMS_PANEL_INDEX = 3;
     private final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
     private  final String
             APP_TITLE = "Deadliner",
