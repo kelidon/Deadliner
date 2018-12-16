@@ -1,2 +1,2 @@
 # Deadliner
-Time management application
+Time management application.
