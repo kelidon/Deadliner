@@ -4,20 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SubjectButton extends JButton {
-    private String time, name, room;
-    private int index;
-    private final String space = "         ";
 
     public SubjectButton(Class lesson, int index, int viewedDay) {
+        super();
         this.time = lesson.getTime();
         this.name = lesson.getSubject();
         this.room = lesson.getRoom();
         this.index = index;
 
-        setLayout(new GridLayout(1, 3));
-        add(new JLabel("<html>" + time + "</html>"));
-        add(new JLabel(space + name));
-        add(new JLabel(space + room));
+        setLayout(new GridBagLayout());
+
+        var constraints = new GridBagConstraints();
+        constraints.gridx = GridBagConstraints.RELATIVE;
+        constraints.weightx = 1;
+        constraints.gridy = 0;
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.anchor = GridBagConstraints.CENTER;
+
+        add(new JLabel("<html>" + time + "</html>"), constraints);
+        add(new JLabel(name), constraints);
+        add(new JLabel(room), constraints);
 
         switch (lesson.getClassType()) {
             case "lecture": {
@@ -36,17 +42,21 @@ public class SubjectButton extends JButton {
         }
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public String getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public String getRoom() {
+        return room;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public int getIndex() {
+        return index;
     }
 
     @Override
@@ -54,19 +64,18 @@ public class SubjectButton extends JButton {
         this.name = name;
     }
 
-    public String getRoom() {
-        return room;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public void setRoom(String room) {
         this.room = room;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     public void setIndex(int index) {
         this.index = index;
     }
+
+    private String time, name, room;
+    private int index;
 }
