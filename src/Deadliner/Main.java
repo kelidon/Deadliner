@@ -86,6 +86,9 @@ public class Main extends JDialog {
         pack();
     }
 
+    static String convertTime(String time){
+        return time.replaceAll("<br>","-");
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -106,12 +109,12 @@ public class Main extends JDialog {
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2;
     static final String[] CLASSES_TIME = {
-            "08:15<br>09:35",
-            "09:45<br>11:05",
-            "11:15<br>12:35",
-            "13:00<br>14:20",
-            "14:20<br>15:50",
-            "19:30<br>21:45"
+                "08:15<br>09:35",
+                "09:45<br>11:05",
+                "11:15<br>12:35",
+                "13:00<br>14:20",
+                "14:20<br>15:50",
+                "19:30<br>21:45"
     };
     private static final String FILE_PATH = "src/timetable.txt";
     private JMenuItem
@@ -120,7 +123,7 @@ public class Main extends JDialog {
             alarms;
     static ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
-    private final Dimension APP_DIMENSION = new Dimension(320, 500);
+    private final Dimension APP_DIMENSION = new Dimension(300, 500);
     static ImageIcon
             //menuIcon,
             backIcon,

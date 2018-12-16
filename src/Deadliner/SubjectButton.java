@@ -12,6 +12,7 @@ public class SubjectButton extends JButton {
         this.room = lesson.getRoom();
         this.index = index;
 
+        setBorder(new RoundedBorder(25));
         setLayout(new GridBagLayout());
 
         var constraints = new GridBagConstraints();
