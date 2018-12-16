@@ -5,11 +5,12 @@ import java.awt.*;
 
 public class SubjectButton extends JButton {
 
+    private JLabel time;
+    private JLabel subject;
+    private JLabel room;
     public SubjectButton(Class lesson, int index, int viewedDay) {
         super();
-        this.time = lesson.getTime();
-        this.name = lesson.getSubject();
-        this.room = lesson.getRoom();
+        task = lesson;
         this.index = index;
 
         setLayout(new GridBagLayout());
@@ -21,9 +22,12 @@ public class SubjectButton extends JButton {
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.CENTER;
 
-        add(new JLabel("<html>" + time + "</html>"), constraints);
-        add(new JLabel(name), constraints);
-        add(new JLabel(room), constraints);
+        time = new JLabel("<html>" + task.getTime() + "</html>");
+        subject = new JLabel(task.getSubject());
+        room = new JLabel(task.getRoom());
+        add(time, constraints);
+        add(subject, constraints);
+        add(room, constraints);
 
         switch (lesson.getClassType()) {
             case "lecture": {
@@ -43,16 +47,24 @@ public class SubjectButton extends JButton {
     }
 
     @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        time.setText("<html>" + task.getTime() + "</html>");
+        subject.setText(task.getSubject());
+        room.setText(task.getRoom());
+    }
+
+    @Override
     public String getName() {
-        return name;
+        return task.getSubject();
     }
 
     public String getTime() {
-        return time;
+        return task.getTime();
     }
 
     public String getRoom() {
-        return room;
+        return task.getRoom();
     }
 
     public int getIndex() {
@@ -61,21 +73,21 @@ public class SubjectButton extends JButton {
 
     @Override
     public void setName(String name) {
-        this.name = name;
+        task.setSubject(name);
     }
 
     public void setTime(String time) {
-        this.time = time;
+        task.setTime(time);
     }
 
     public void setRoom(String room) {
-        this.room = room;
+        task.setRoom(room);
     }
 
     public void setIndex(int index) {
         this.index = index;
     }
 
-    private String time, name, room;
+    private Class task;
     private int index;
 }
