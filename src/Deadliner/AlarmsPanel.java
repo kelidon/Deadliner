@@ -30,6 +30,7 @@ public class AlarmsPanel extends JPanel {
         var playPause = new JRadioButton(playIcon);
         playPause.setSelectedIcon(pauseIcon);
         musicPanel.add(playPause);
+        
         playPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +45,7 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         });
+
         var linkButton = new JRadioButton(httpIcon);
         musicPanel.add(linkButton);
         linkButton.addActionListener(new ActionListener() {
@@ -56,12 +58,14 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         });
+
         var timerPanel = new JPanel();
         var timerField = new JTextField();
         timerField.setPreferredSize(TIMER_DIM);
         timerPanel.add(timerField);
         var submitButton = new JButton("Submit");
         timerPanel.add(submitButton);
+
         var timerListener = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,6 +78,7 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         };
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
