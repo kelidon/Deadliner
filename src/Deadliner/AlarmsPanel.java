@@ -65,6 +65,7 @@ public class AlarmsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!timerField.getText().equals("")) {
+                    playPause.setSelected(true);
                     var timer = new Timer(Integer.parseInt(timerField.getText())*1000, playPause.getActionListeners()[0]);
                     timer.start();
                 }
