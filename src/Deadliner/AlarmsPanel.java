@@ -46,7 +46,7 @@ public class AlarmsPanel extends JPanel {
             }
         });
 
-        var linkButton = new JRadioButton(httpIcon);
+        var linkButton = new JRadioButton("Автор");
         musicPanel.add(linkButton);
         linkButton.addActionListener(new ActionListener() {
             @Override
