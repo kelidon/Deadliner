@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
 import static Deadliner.Main.*;
 
@@ -61,12 +62,23 @@ public class AlarmsPanel extends JPanel {
         timerPanel.add(timerField);
         var submitButton = new JButton("Submit");
         timerPanel.add(submitButton);
+        var timerListener = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (clip == null) {
+                    System.out.println("audio file is not openned");
+                }
+                else {
+                    playPause.setSelected(true);
+                    clip.start();
+                }
+            }
+        };
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!timerField.getText().equals("")) {
-                    playPause.setSelected(true);
-                    var timer = new Timer(Integer.parseInt(timerField.getText())*1000, playPause.getActionListeners()[0]);
+                    var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
                     timer.start();
                 }
             }
