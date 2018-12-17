@@ -66,6 +66,7 @@ public class AlarmsPanel extends JPanel {
         var submitButton = new JButton("Submit");
         timerPanel.add(submitButton);
 
+        //Timer timer;
         var timerListener = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,6 +86,7 @@ public class AlarmsPanel extends JPanel {
                 if(!timerField.getText().equals("")) {
                     var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
                     timer.start();
+                    timer.setRepeats(false);
                 }
             }
         });
