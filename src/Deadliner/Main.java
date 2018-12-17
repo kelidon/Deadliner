@@ -57,6 +57,9 @@ public class Main extends JDialog {
         addIcon = new ImageIcon(ADD_PNG_FILEPATH);
         rightIcon = new ImageIcon(RIGHT_PNG_FILEPATH);
         leftIcon = new ImageIcon(LEFT_PNG_FILEPATH);
+        playIcon = new ImageIcon(PLAY_PNG_FILEPATH);
+        pauseIcon = new ImageIcon(PAUSE_PNG_FILEPATH);
+        httpIcon = new ImageIcon(HTTP_PNG_FILEPATH);
         setTitle(APP_TITLE);
         setContentPane(contentPane);
 
@@ -144,7 +147,10 @@ public class Main extends JDialog {
             backIcon,
             addIcon,
             rightIcon,
-            leftIcon;
+            leftIcon,
+            pauseIcon,
+            playIcon,
+            httpIcon;
     private final int
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2,
@@ -156,5 +162,8 @@ public class Main extends JDialog {
             ADD_PNG_FILEPATH = "image/add.png",
             MENU_PNG_FILEPATH = "image/menu.png",
             RIGHT_PNG_FILEPATH = "image/right.png",
-            LEFT_PNG_FILEPATH = "image/left.png";
+            LEFT_PNG_FILEPATH = "image/left.png",
+            PLAY_PNG_FILEPATH = "image/play.png",
+            PAUSE_PNG_FILEPATH = "image/pause.png",
+            HTTP_PNG_FILEPATH = "image/http.png";
 }

@@ -9,12 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
+
+import static Deadliner.Main.*;
 
 public class AlarmsPanel extends JPanel {
-    private Clip clip;
+
     AlarmsPanel(){
         super();
-
+        setLayout(new GridLayout(8,1));
+        var musicPanel = new JPanel();
         try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/031100.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
@@ -23,34 +27,28 @@ public class AlarmsPanel extends JPanel {
             System.out.println(exc.getMessage());
         }
 
-        JButton button = new JButton("play");
-        add(button);
-        button.addActionListener(new ActionListener() {
+        var playPause = new JRadioButton(playIcon);
+        playPause.setSelectedIcon(pauseIcon);
+        musicPanel.add(playPause);
+        
+        playPause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (clip == null){
+                if (clip == null) {
                     System.out.println("audio file is not openned");
-                    return;
                 }
-                clip.start();
-            }
-        });
-        button = new JButton("stop");
-        add(button);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (clip == null){
-                    System.out.println("audio file is not openned");
-                    return;
+                else {
+                    if (playPause.isSelected())
+                        clip.start();
+                    else
+                        clip.stop();
                 }
-                clip.stop();
             }
         });
 
-        button = new JButton("music author");
-        add(button);
-        button.addActionListener(new ActionListener() {
+        var linkButton = new JRadioButton(httpIcon);
+        musicPanel.add(linkButton);
+        linkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -60,5 +58,39 @@ public class AlarmsPanel extends JPanel {
                 }
             }
         });
+
+        var timerPanel = new JPanel();
+        var timerField = new JTextField();
+        timerField.setPreferredSize(TIMER_DIM);
+        timerPanel.add(timerField);
+        var submitButton = new JButton("Submit");
+        timerPanel.add(submitButton);
+
+        var timerListener = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (clip == null) {
+                    System.out.println("audio file is not openned");
+                }
+                else {
+                    playPause.setSelected(true);
+                    clip.start();
+                }
+            }
+        };
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!timerField.getText().equals("")) {
+                    var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
+                    timer.start();
+                }
+            }
+        });
+        add(musicPanel);
+        add(timerPanel);
     }
+    private Clip clip;
+    private Dimension TIMER_DIM = new Dimension(40,27);
 }
