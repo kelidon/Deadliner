@@ -12,7 +12,6 @@ public class SubjectButton extends JButton {
         this.room = lesson.getRoom();
         this.index = index;
 
-        setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH));
         setLayout(new GridBagLayout());
 
         var constraints = new GridBagConstraints();
@@ -30,19 +29,28 @@ public class SubjectButton extends JButton {
 
         switch (lesson.getClassType()) {
             case "lecture": {
-                setBackground(new Color(245,244,117));
+                setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH, new Color(245,244,117)));
                 break;
             }
             case "litklub": {
-                setBackground(new Color(242,139,130));
+                setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH, new Color(242,139,130)));
                 break;
             }
             case "str": {
-                setBackground(new Color(167,255, 235));
+                setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH, new Color(167,255, 235)));
+                break;
+            }
+            case "regular":{
+                setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH, Color.white));
                 break;
             }
             default:{
-                setBackground(Color.white);
+                if(index<3) {
+                    setBorder(new RoundedBorder(BORDER_RADIUS, BORDER_WIDTH, Color.white));
+                }
+                else
+                    setBorder(new RoundedBorder(0, 0, Color.white, Color.white));
+                break;
             }
         }
     }

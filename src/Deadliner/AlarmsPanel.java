@@ -85,6 +85,7 @@ public class AlarmsPanel extends JPanel {
                 if(!timerField.getText().equals("")) {
                     var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
                     timer.start();
+                    timer.setRepeats(false);
                 }
             }
         });
