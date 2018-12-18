@@ -41,17 +41,8 @@ class TimetablePanel extends JPanel {
 
 
         var currDayPanel = new JPanel();
-        //currDayPanel.setBackground(Color.white);
-//        currDayPanel.setLayout(new GridBagLayout());
-        //var constraints = new GridBagConstraints();
-//        constraints.anchor = GridBagConstraints.NORTHEAST;
-//        constraints.gridx = GridBagConstraints.RELATIVE;
-//        constraints.weightx = 1;
-//        constraints.gridy = 0;
-//        constraints.fill = GridBagConstraints.NONE;
-        //var dayLabel = new JLabel(DAYS[viewedDayNumber]);
-        //dayLabel.setForeground(Color.white);
-        //dayLabel.setBackground(Color.darkGray);
+        currDayPanel.setBackground(Color.white);
+        currDayPanel.setBorder(new RoundedBorder(0,0,Color.white, Color.white));
 
         dayLabel = new JLabel(DAYS[viewedDayNumber]);
         dayLabel.setBackground(Color.white);
