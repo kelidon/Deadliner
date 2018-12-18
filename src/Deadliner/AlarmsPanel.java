@@ -66,7 +66,6 @@ public class AlarmsPanel extends JPanel {
         var submitButton = new JButton("Submit");
         timerPanel.add(submitButton);
 
-        //Timer timer;
         var timerListener = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {

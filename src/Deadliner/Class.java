@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Class {
 
     Class(){
-        this("", "", "regular");
+        this("", "", "");
     }
 
     public Class(String subject, String room, String classType) {
