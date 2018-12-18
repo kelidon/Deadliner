@@ -46,7 +46,7 @@ public class AlarmsPanel extends JPanel {
             }
         });
 
-        var linkButton = new JRadioButton("Автор");
+        var linkButton = new JButton("Автор");
         musicPanel.add(linkButton);
         linkButton.addActionListener(new ActionListener() {
             @Override
@@ -93,5 +93,5 @@ public class AlarmsPanel extends JPanel {
         add(timerPanel);
     }
     private Clip clip;
-    private Dimension TIMER_DIM = new Dimension(40,27);
+    private Dimension TIMER_DIM = new Dimension(30,27);
 }
