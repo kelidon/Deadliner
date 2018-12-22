@@ -9,6 +9,10 @@ public class Deadline {
         this.info = "";
         this.deadlineDate = null;
     }
+    Deadline(String info){
+        this.info = info;
+        this.deadlineDate = null;
+    }
 
     Deadline(String info, Date deadlineDate) {
         this.info = info;
