@@ -5,13 +5,14 @@ import Deadliner.Deadline;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static Deadliner.Main.ICON_SIZE;
 
 public class AddDeadlineDialog extends JDialog {
 
-    AddDeadlineDialog() {
+    AddDeadlineDialog(ArrayList<Deadline> deadlines) {
         setTitle(ADD_DIALOG_TITLE);
         setContentPane(contentPane);
         setModal(true);
@@ -45,7 +46,7 @@ public class AddDeadlineDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Main.deadlines.add(new Deadline(info.getText()
+                    deadlines.add(new Deadline(info.getText()
 //                            ,
 //                            new Date(Integer.parseInt(year.getText()) - YEAR_SHIFT,
 //                                    Integer.parseInt(month.getText()),

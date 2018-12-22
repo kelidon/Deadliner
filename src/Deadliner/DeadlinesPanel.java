@@ -6,13 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import static Deadliner.Main.ICON_SIZE;
-import static Deadliner.Main.deadlines;
 
 class DeadlinesPanel extends JPanel implements MouseListener {
 
-    DeadlinesPanel(){
+    DeadlinesPanel(ArrayList<Deadline> deadlines){
         deadlines.add(new Deadline("Test deadline"));
         this.setLayout(new BorderLayout());
         centralPane = new JPanel();
@@ -39,7 +39,7 @@ class DeadlinesPanel extends JPanel implements MouseListener {
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var addDeadline = new AddDeadlineDialog();
+                var addDeadline = new AddDeadlineDialog(deadlines);
                 addDeadline.pack();
                 addDeadline.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
                 addDeadline.setVisible(true);

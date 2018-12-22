@@ -28,7 +28,7 @@ public class Main extends JDialog {
         alarms.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO add alarms to the app
+                //TODO finish the alarms, ARTSIOM
                 mainLayout.show(mainPane, String.valueOf(ALARMS_PANEL_INDEX));
             }
         });
@@ -88,7 +88,7 @@ public class Main extends JDialog {
         setJMenuBar(menuBar);
 
         var timetablePanel = new TimetablePanel(FILE_PATH);
-        var deadlinesPanel = new DeadlinesPanel();
+        var deadlinesPanel = new DeadlinesPanel(deadlines);
         var alarmsPanel = new AlarmsPanel();
         mainPane.add(timetablePanel, String.valueOf(TIMETABLE_PANEL_INDEX));
         mainPane.add(deadlinesPanel, String.valueOf(DEADLINES_PANEL_INDEX));
@@ -139,7 +139,7 @@ public class Main extends JDialog {
             timetable,
             deadliner,
             alarms;
-    static ArrayList<Deadline> deadlines;
+    private ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
     private final Dimension APP_DIMENSION = new Dimension(300, 500);
     static ImageIcon
