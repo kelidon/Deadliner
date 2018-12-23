@@ -92,6 +92,11 @@ public class AlarmsPanel extends JPanel {
         add(musicPanel);
         add(timerPanel);
     }
+
+    public void killclipOnClose(){
+        clip.stop();
+        clip.close();
+    }
     private Clip clip;
     private Dimension TIMER_DIM = new Dimension(30,27);
 }
