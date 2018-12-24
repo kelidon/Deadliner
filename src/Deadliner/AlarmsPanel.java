@@ -9,16 +9,51 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URI;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import static Deadliner.Main.*;
 
 public class AlarmsPanel extends JPanel {
 
+    private class MyThread implements Runnable {
+        private Thread myThread;
+
+        MyThread(){
+            myThread = new Thread(this, "Current Time Thread");
+            myThread.start();
+        }
+        @Override
+        public void run() {
+            while (!isClosing) {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MMM,    HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                currentTime.setText(now.format(dtf));
+                try {
+                    myThread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(this + "  stopped");
+        }
+    };
+
     AlarmsPanel(){
         super();
+        // why 8?
         setLayout(new GridLayout(8,1));
-        var musicPanel = new JPanel();
+
+        new MyThread();
+
+        var panelForActuallAlarms = new JPanel(new GridBagLayout());
+        add(panelForActuallAlarms);
+
+        currentTime = new JLabel();
+        panelForActuallAlarms.add(currentTime);
+
         try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/031100.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
@@ -26,6 +61,8 @@ public class AlarmsPanel extends JPanel {
         } catch (Exception exc){
             System.out.println(exc.getMessage());
         }
+
+        var musicPanel = new JPanel();
 
         var playPause = new JRadioButton(playIcon);
         playPause.setSelectedIcon(pauseIcon);
@@ -93,10 +130,12 @@ public class AlarmsPanel extends JPanel {
         add(timerPanel);
     }
 
-    public void killclipOnClose(){
+    public void killClipOnClose(){
         clip.stop();
         clip.close();
     }
+
+    private JLabel currentTime;
     private Clip clip;
     private Dimension TIMER_DIM = new Dimension(30,27);
 }

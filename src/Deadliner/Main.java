@@ -37,7 +37,10 @@ public class Main extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                alarmsPanel.killclipOnClose();
+                alarmsPanel.killClipOnClose();
+
+                isClosing = true;
+
                 dispose();
             }
         });
@@ -45,7 +48,8 @@ public class Main extends JDialog {
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                alarmsPanel.killclipOnClose();
+                isClosing = true;
+                alarmsPanel.killClipOnClose();
                 dispose();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -116,6 +120,7 @@ public class Main extends JDialog {
         });
     }
 
+    public static boolean isClosing = false;
     private JPanel contentPane, mainPane;
     public static Calendar calendar = Calendar.getInstance();
 
