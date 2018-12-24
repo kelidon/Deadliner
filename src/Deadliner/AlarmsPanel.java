@@ -5,57 +5,127 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.net.URI;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
 
 import static Deadliner.Main.*;
 
 public class AlarmsPanel extends JPanel {
 
-    private class MyThread implements Runnable {
+    private class AlarmThread implements Runnable {
         private Thread myThread;
 
-        MyThread(){
+        AlarmThread(){
             myThread = new Thread(this, "Current Time Thread");
             myThread.start();
         }
         @Override
         public void run() {
             while (!isClosing) {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MMM,    HH:mm:ss");
-                LocalDateTime now = LocalDateTime.now();
-                currentTime.setText(now.format(dtf));
-                try {
-                    myThread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                updateCurrentTime();
+                if (isAlarmSet){
+                    updateTimeUntilAlarm();
                 }
             }
             System.out.println(this + "  stopped");
         }
+
+        private void updateCurrentTime(){
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MMM,    HH:mm:ss");
+            now = LocalDateTime.now();
+            currentTime.setText(now.format(dtf));
+            try {
+                myThread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        private void updateTimeUntilAlarm(){
+            var timeLeft =  alarmTime.minusHours(now.getHour())
+                                    .minusMinutes(now.getMinute())
+                                    .minusSeconds(now.getSecond() + 1);
+            alarmTimeLeftLabel.setText(
+                    timeLeft.format( DateTimeFormatter.ofPattern("HH:mm:ss") )
+            );
+            if (timeLeft.getHour() == 0 && timeLeft.getMinute() == 0 && timeLeft.getSecond() == 0){
+                isAlarmSet = false;
+                playPauseButton.setSelected(true);
+                clip.start();
+                alarmTimeLeftLabel.setText("Rang!");
+            }
+        }
     };
 
-    AlarmsPanel(){
-        super();
-        // why 8?
-        setLayout(new GridLayout(8,1));
-
-        new MyThread();
-
-        var panelForActuallAlarms = new JPanel(new GridBagLayout());
-        add(panelForActuallAlarms);
+    private void setActualAlarmsPanel(){
+        var panelForActualAlarms = new JPanel(new GridLayout(0, 1));
 
         currentTime = new JLabel();
-        panelForActuallAlarms.add(currentTime);
+
+        var setAlarmPanel = new JPanel();
+
+        ActionListener setAlarmTimeListener = e -> {
+            //пойдут, возможно, костыли. Пролема в том, что дата из строки требует год. Вот его и добавим
+            String hoursMinutes = alarmTimeField.getText();
+            hoursMinutes += "-00 11-11-2099";
+
+            try {
+                alarmTime = LocalDateTime.parse(
+                        hoursMinutes,
+                        DateTimeFormatter.ofPattern("H[H]-m[m]-ss dd-MM-yyyy")
+                );
+                isAlarmSet = true;
+            } catch (Exception exc) {
+                isAlarmSet = false;
+                JOptionPane.showMessageDialog(
+                        null,
+                        "invalid format for alarm\n" +
+                        "correct format : hh-mm"
+                );
+            }
+        };
+
+        alarmTimeField = new JTextField("hh-mm");
+        alarmTimeField.setPreferredSize( ALARM_SIZE );
+        alarmTimeField.addActionListener(setAlarmTimeListener);
+
+        JButton setAlarmButton = new JButton("set");
+        setAlarmButton.addActionListener(setAlarmTimeListener);
+
+        JButton cancelAlarmButton = new JButton("cancel");
+        cancelAlarmButton.addActionListener( e -> {
+            if (isAlarmSet) {
+                isAlarmSet = false;
+                alarmTimeLeftLabel.setText("alarm canceled");
+            }
+        });
+
+        alarmTimeLeftLabel = new JLabel("Time until alarm");
+
+        setAlarmPanel.add(alarmTimeField);
+        setAlarmPanel.add(setAlarmButton);
+        setAlarmPanel.add(cancelAlarmButton);
+        setAlarmPanel.add(alarmTimeLeftLabel);
+
+        panelForActualAlarms.add(currentTime);
+        panelForActualAlarms.add(setAlarmPanel);
+        add(panelForActualAlarms);
+    }
+    AlarmsPanel(){
+        super();
+        // why 6?
+        setLayout(new GridLayout(6,1));
+
+        setActualAlarmsPanel();
+
+        new AlarmThread();
 
         try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/031100.wav").getAbsoluteFile());
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(
+                    new File("src/031100.wav").getAbsoluteFile()
+            );
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         } catch (Exception exc){
@@ -64,18 +134,18 @@ public class AlarmsPanel extends JPanel {
 
         var musicPanel = new JPanel();
 
-        var playPause = new JRadioButton(playIcon);
-        playPause.setSelectedIcon(pauseIcon);
-        musicPanel.add(playPause);
+        playPauseButton = new JRadioButton(playIcon);
+        playPauseButton.setSelectedIcon(pauseIcon);
+        musicPanel.add(playPauseButton);
         
-        playPause.addActionListener(new ActionListener() {
+        playPauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (clip == null) {
                     System.out.println("audio file is not openned");
                 }
                 else {
-                    if (playPause.isSelected())
+                    if (playPauseButton.isSelected())
                         clip.start();
                     else
                         clip.stop();
@@ -110,7 +180,7 @@ public class AlarmsPanel extends JPanel {
                     System.out.println("audio file is not openned");
                 }
                 else {
-                    playPause.setSelected(true);
+                    playPauseButton.setSelected(true);
                     clip.start();
                 }
             }
@@ -135,7 +205,15 @@ public class AlarmsPanel extends JPanel {
         clip.close();
     }
 
+    private boolean isAlarmSet = false;
+    private LocalDateTime now;
+    private LocalDateTime alarmTime;
+    private JLabel alarmTimeLeftLabel;
+    private JTextField alarmTimeField;
     private JLabel currentTime;
+
+    private JRadioButton playPauseButton;
     private Clip clip;
     private Dimension TIMER_DIM = new Dimension(30,27);
+    private Dimension ALARM_SIZE = new Dimension(50, 27);
 }
