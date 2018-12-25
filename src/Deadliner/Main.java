@@ -37,6 +37,10 @@ public class Main extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                alarmsPanel.killClipOnClose();
+
+                isClosing = true;
+
                 dispose();
             }
         });
@@ -44,6 +48,8 @@ public class Main extends JDialog {
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                isClosing = true;
+                alarmsPanel.killClipOnClose();
                 dispose();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -89,7 +95,7 @@ public class Main extends JDialog {
 
         var timetablePanel = new TimetablePanel(FILE_PATH);
         var deadlinesPanel = new DeadlinesPanel();
-        var alarmsPanel = new AlarmsPanel();
+        alarmsPanel = new AlarmsPanel();
         mainPane.add(timetablePanel, String.valueOf(TIMETABLE_PANEL_INDEX));
         mainPane.add(deadlinesPanel, String.valueOf(DEADLINES_PANEL_INDEX));
         mainPane.add(alarmsPanel, String.valueOf(ALARMS_PANEL_INDEX));
@@ -102,6 +108,7 @@ public class Main extends JDialog {
     static String convertTime(String time){
         return time.replaceAll("<br>","-");
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -113,6 +120,7 @@ public class Main extends JDialog {
         });
     }
 
+    public static boolean isClosing = false;
     private JPanel contentPane, mainPane;
     public static Calendar calendar = Calendar.getInstance();
 
@@ -141,6 +149,7 @@ public class Main extends JDialog {
             alarms;
     static ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
+    private AlarmsPanel alarmsPanel;
     private final Dimension APP_DIMENSION = new Dimension(300, 500);
     static ImageIcon
             //menuIcon,
