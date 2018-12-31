@@ -37,9 +37,9 @@ public class DeadlinesPanel extends JPanel{
         deadlinesArea.setText("");
         if(!Main.deadlines.isEmpty()){
             for(var deadline: Main.deadlines){
-                deadlinesArea.append(deadline.getInfo() +
+                deadlinesArea.append(deadline.getTitle() +
                         "\t" +
-                        String.format("%te %<tB %<tY", deadline.getDeadlineDate()) +
+                        String.format("%te %<tB %<tY", deadline.getDeadline()) +
                         "\n");
             }
         }

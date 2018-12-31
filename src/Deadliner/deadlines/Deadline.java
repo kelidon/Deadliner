@@ -1,33 +1,56 @@
 package deadliner.deadlines;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline {
-    private String info;
-    private Date deadlineDate;
-    Deadline(){
-        this.info = "";
-        this.deadlineDate = null;
+
+    // this are subject to change. Also we may replace getDeadline with getDate, getTime etc...
+    private static final String INPUT_FORMAT = "d[d]-M[M]-y[y] HH-mm";
+    private static final String PRINT_FORMAT_NO_TIME = "dd/MM/yyyy";
+    private static final String PRINT_FORMAT_WITH_TIME = "dd/MM/yy    HH-mm";
+
+    // I think we can remove this one.
+    public Deadline() {
+        this.informativeTitle = "NOT SET";
+        this.deadline = null;
     }
 
-    Deadline(String info, Date deadlineDate) {
-        this.info = info;
-        this.deadlineDate = deadlineDate;
+    public Deadline(String informativeTitle, String dateString, String timeString) {
+        this.informativeTitle = informativeTitle;
+        this.isDueTime = true;
+        this.deadline = LocalDateTime.parse(
+                dateString + " " + timeString,
+                DateTimeFormatter.ofPattern(INPUT_FORMAT)
+        );
     }
 
-    public String getInfo() {
-        return info;
+    public Deadline(String informativeTitle, String ddMMyy) {
+        this.informativeTitle = informativeTitle;
+        this.isDueTime = false;
+        this.deadline = LocalDateTime.parse(
+                ddMMyy + " 23-59",
+                DateTimeFormatter.ofPattern(INPUT_FORMAT)
+        );
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public String getTitle() {
+        return informativeTitle;
     }
 
-    public Date getDeadlineDate() {
-        return deadlineDate;
+    public void setTitle(String informativeTitle) {
+        this.informativeTitle = informativeTitle;
     }
 
-    public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = deadlineDate;
+    public String getDeadline() {
+        return isDueTime ? deadline.format(DateTimeFormatter.ofPattern(PRINT_FORMAT_WITH_TIME)) : deadline.format(DateTimeFormatter.ofPattern(PRINT_FORMAT_NO_TIME));
     }
+
+//    TODO: add setDeadline to configure deadline after creation
+//    public void setDeadline( ... ){}
+
+    private String informativeTitle;
+    private LocalDateTime deadline;
+    private boolean isDueTime;
+//    TODO : add field for extra details (e.g. note itslef / path to file / etc...)
 }
