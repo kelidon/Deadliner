@@ -1,18 +1,18 @@
-package Deadliner;
+package deadliner.timetable;
+
+import deadliner.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Calendar;
 
-import static Deadliner.Main.DAYS;
-import static Deadliner.Main.NUMBER_OF_CLASSES;
+import static deadliner.Main.DAYS;
+import static deadliner.Main.NUMBER_OF_CLASSES;
 
-class TimetablePanel extends JPanel {
+public class TimetablePanel extends JPanel {
 
-    TimetablePanel(String timetableFilePath) {
+    public TimetablePanel(String timetableFilePath) {
 
         this.setLayout(new BorderLayout());
 
@@ -69,37 +69,31 @@ class TimetablePanel extends JPanel {
 
         this.add(turnButtonSPanel, BorderLayout.SOUTH);
 
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(viewedDayNumber == 5) {
-                    viewedDayNumber = 0;
-                    layout.first(dayPanel);
-                }
-                else {
-                    viewedDayNumber++;
-                    layout.next(dayPanel);
-                }
-                dayLabel.setText(DAYS[viewedDayNumber]);
+        next.addActionListener(e -> {
+            if(viewedDayNumber == 5) {
+                viewedDayNumber = 0;
+                layout.first(dayPanel);
             }
+            else {
+                viewedDayNumber++;
+                layout.next(dayPanel);
+            }
+            dayLabel.setText(DAYS[viewedDayNumber]);
         });
-        previous.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(viewedDayNumber==0){
-                    viewedDayNumber=5;
-                    layout.last(dayPanel);
-                }
-                else{
-                    viewedDayNumber--;
-                    layout.previous(dayPanel);
-                }
-                dayLabel.setText(DAYS[viewedDayNumber]);
+        previous.addActionListener(e -> {
+            if(viewedDayNumber==0){
+                viewedDayNumber=5;
+                layout.last(dayPanel);
             }
+            else{
+                viewedDayNumber--;
+                layout.previous(dayPanel);
+            }
+            dayLabel.setText(DAYS[viewedDayNumber]);
         });
     }
     static int viewedDayNumber;
     static Week week;
-    private final Dimension TURN_DIM = new Dimension(300, 50);
+    private static final Dimension TURN_DIM = new Dimension(300, 50);
     private JLabel dayLabel;
 }

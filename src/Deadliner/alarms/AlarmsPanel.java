@@ -1,4 +1,4 @@
-package Deadliner;
+package deadliner.alarms;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -11,7 +11,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static Deadliner.Main.*;
+import static deadliner.Main.*;
 
 public class AlarmsPanel extends JPanel {
 
@@ -38,7 +38,7 @@ public class AlarmsPanel extends JPanel {
             now = LocalDateTime.now();
             currentTime.setText(now.format(dtf));
             try {
-                myThread.sleep(1000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -57,7 +57,7 @@ public class AlarmsPanel extends JPanel {
                 alarmTimeLeftLabel.setText("Rang!");
             }
         }
-    };
+    }
 
     private void setActualAlarmsPanel(){
         var panelForActualAlarms = new JPanel(new GridLayout(0, 1));
@@ -113,7 +113,8 @@ public class AlarmsPanel extends JPanel {
         panelForActualAlarms.add(setAlarmPanel);
         add(panelForActualAlarms);
     }
-    AlarmsPanel(){
+
+    public AlarmsPanel(){
         super();
         // why 6?
         setLayout(new GridLayout(6,1));
@@ -138,31 +139,25 @@ public class AlarmsPanel extends JPanel {
         playPauseButton.setSelectedIcon(pauseIcon);
         musicPanel.add(playPauseButton);
         
-        playPauseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (clip == null) {
-                    System.out.println("audio file is not openned");
-                }
-                else {
-                    if (playPauseButton.isSelected())
-                        clip.start();
-                    else
-                        clip.stop();
-                }
+        playPauseButton.addActionListener(e -> {
+            if (clip == null) {
+                System.out.println("audio file is not openned");
+            }
+            else {
+                if (playPauseButton.isSelected())
+                    clip.start();
+                else
+                    clip.stop();
             }
         });
 
         var linkButton = new JButton("Автор");
         musicPanel.add(linkButton);
-        linkButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://daitetank.ru/music/"));
-                }catch (Exception exc){
-                    exc.printStackTrace();
-                }
+        linkButton.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://daitetank.ru/music/"));
+            }catch (Exception exc){
+                exc.printStackTrace();
             }
         });
 
@@ -186,14 +181,11 @@ public class AlarmsPanel extends JPanel {
             }
         };
 
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!timerField.getText().equals("")) {
-                    var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
-                    timer.start();
-                    timer.setRepeats(false);
-                }
+        submitButton.addActionListener(e -> {
+            if(!timerField.getText().equals("")) {
+                var timer = new Timer(Integer.parseInt(timerField.getText())*1000, timerListener);
+                timer.start();
+                timer.setRepeats(false);
             }
         });
         add(musicPanel);

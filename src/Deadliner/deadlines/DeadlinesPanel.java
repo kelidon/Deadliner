@@ -1,15 +1,13 @@
-package Deadliner;
+package deadliner.deadlines;
+
+import deadliner.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import static Deadliner.Main.ICON_SIZE;
+public class DeadlinesPanel extends JPanel{
 
-class DeadlinesPanel extends JPanel{
-
-    DeadlinesPanel(){
+    public DeadlinesPanel(){
         this.setLayout(new BorderLayout());
         deadlinesArea = new TextArea();
         var centralPane = new JPanel();
@@ -27,15 +25,12 @@ class DeadlinesPanel extends JPanel{
         deadlinesArea.setEditable(false);
         deadlinesArea.setPreferredSize(DEADLINES_AREA_DIM);
 
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var addDeadline = new AddDeadlineDialog();
-                addDeadline.pack();
-                addDeadline.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-                addDeadline.setVisible(true);
-                showDeadlines();
-            }
+        add.addActionListener(e -> {
+            var addDeadline = new AddDeadlineDialog();
+            addDeadline.pack();
+            addDeadline.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            addDeadline.setVisible(true);
+            showDeadlines();
         });
     }
     private void showDeadlines(){
@@ -51,7 +46,7 @@ class DeadlinesPanel extends JPanel{
     }
 
     private TextArea deadlinesArea;
-    private final Dimension
+    private static final Dimension
             NAV_PANEL_DIM = new Dimension(350,50),
             DEADLINES_AREA_DIM = new Dimension(280,380);
 }

@@ -1,13 +1,11 @@
-package Deadliner;
+package deadliner.timetable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static Deadliner.Main.DAYS;
-import static Deadliner.Main.NUMBER_OF_CLASSES;
-import static Deadliner.TimetablePanel.viewedDayNumber;
+import static deadliner.Main.NUMBER_OF_CLASSES;
 
 class DayPanel extends JPanel implements MouseListener {
     private SubjectButton[] subjectButtons = new SubjectButton[6];
