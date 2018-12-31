@@ -18,25 +18,9 @@ public class Main extends JDialog {
     private Main() {
         onCreate();
 
-        timetable.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainLayout.show(mainPane, String.valueOf(TIMETABLE_PANEL_INDEX));
-            }
-        });
-        deadliner.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainLayout.show(mainPane, String.valueOf(DEADLINES_PANEL_INDEX));
-            }
-        });
-        alarms.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO add alarms to the app
-                mainLayout.show(mainPane, String.valueOf(ALARMS_PANEL_INDEX));
-            }
-        });
+        timetable.addActionListener(e -> mainLayout.show(mainPane, String.valueOf(TIMETABLE_PANEL_INDEX)));
+        deadliner.addActionListener(e -> mainLayout.show(mainPane, String.valueOf(DEADLINES_PANEL_INDEX)));
+        alarms.addActionListener(e -> mainLayout.show(mainPane, String.valueOf(ALARMS_PANEL_INDEX)));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -51,13 +35,14 @@ public class Main extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                isClosing = true;
-                alarmsPanel.killClipOnClose();
-                dispose();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(
+                e -> {
+                    isClosing = true;
+                    alarmsPanel.killClipOnClose();
+                    dispose();
+                },
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onCreate() {
@@ -110,18 +95,15 @@ public class Main extends JDialog {
         pack();
     }
 
-    public static String convertTime(String time){
-        return time.replaceAll("<br>","-");
+    public static String convertTime(String time) {
+        return time.replaceAll("<br>", "-");
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Main dialog = new Main();
-                dialog.pack();
-                dialog.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            Main dialog = new Main();
+            dialog.pack();
+            dialog.setVisible(true);
         });
     }
 
@@ -132,12 +114,12 @@ public class Main extends JDialog {
     public static final int NUMBER_OF_CLASSES = 6,
             ICON_SIZE = 35;
     public static final String[] CLASSES_TIME = {
-                "08:15<br>09:35",
-                "09:45<br>11:05",
-                "11:15<br>12:35",
-                "13:00<br>14:20",
-                "14:20<br>15:50",
-                "19:30<br>21:45"
+            "08:15<br>09:35",
+            "09:45<br>11:05",
+            "11:15<br>12:35",
+            "13:00<br>14:20",
+            "14:20<br>15:50",
+            "19:30<br>21:45"
     };
     public static final String[] DAYS = {
             "Понедельник",
@@ -156,7 +138,7 @@ public class Main extends JDialog {
     private CardLayout mainLayout;
     private AlarmsPanel alarmsPanel;
     private final Dimension APP_DIMENSION = new Dimension(300, 500);
-    public  static  ImageIcon
+    public static ImageIcon
             //menuIcon,
             backIcon,
             addIcon,
@@ -170,7 +152,7 @@ public class Main extends JDialog {
             DEADLINES_PANEL_INDEX = 2,
             ALARMS_PANEL_INDEX = 3;
     private static final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
-    public  static final String
+    private static final String
             APP_TITLE = "deadliner",
             BACK_PNG_FILEPATH = "image/back.png",
             ADD_PNG_FILEPATH = "image/add.png",
