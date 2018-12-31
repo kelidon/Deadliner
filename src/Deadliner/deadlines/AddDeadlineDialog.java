@@ -40,18 +40,18 @@ public class AddDeadlineDialog extends JDialog {
         centralPane.add(year);
         centralPane.add(info);
         add(centralPane, BorderLayout.CENTER);
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    Main.deadlines.add(new Deadline(info.getText(),
-                            new Date(Integer.parseInt(year.getText()) - YEAR_SHIFT,
-                                    Integer.parseInt(month.getText()),
-                                    Integer.parseInt(day.getText()))));
-                }catch(IllegalArgumentException exc){}
-                dispose();
-            }
-        });
+//        back.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try{
+//                    Main.deadlines.add(new Deadline(info.getText(),
+//                            new Date(Integer.parseInt(year.getText()) - YEAR_SHIFT,
+//                                    Integer.parseInt(month.getText()),
+//                                    Integer.parseInt(day.getText()))));
+//                }catch(IllegalArgumentException exc){}
+//                dispose();
+//            }
+//        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
