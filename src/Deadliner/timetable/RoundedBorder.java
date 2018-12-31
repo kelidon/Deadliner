@@ -1,9 +1,7 @@
-package Deadliner;
+package deadliner.timetable;
 
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.RoundRectangle2D;
 
 public class RoundedBorder implements Border {
 

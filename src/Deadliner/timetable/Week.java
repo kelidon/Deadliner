@@ -1,4 +1,6 @@
-package Deadliner;
+package deadliner.timetable;
+
+import deadliner.Main;
 
 import java.io.File;
 import java.io.FileNotFoundException;

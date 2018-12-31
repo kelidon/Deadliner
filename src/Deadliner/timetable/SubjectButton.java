@@ -1,4 +1,4 @@
-package Deadliner;
+package deadliner.timetable;
 
 import javax.swing.*;
 import java.awt.*;

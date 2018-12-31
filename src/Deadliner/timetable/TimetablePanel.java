@@ -1,4 +1,6 @@
-package Deadliner;
+package deadliner.timetable;
+
+import deadliner.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,12 +9,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Calendar;
 
-import static Deadliner.Main.DAYS;
-import static Deadliner.Main.NUMBER_OF_CLASSES;
+import static deadliner.Main.DAYS;
+import static deadliner.Main.NUMBER_OF_CLASSES;
 
-class TimetablePanel extends JPanel {
+public class TimetablePanel extends JPanel {
 
-    TimetablePanel(String timetableFilePath) {
+    public TimetablePanel(String timetableFilePath) {
 
         this.setLayout(new BorderLayout());
 

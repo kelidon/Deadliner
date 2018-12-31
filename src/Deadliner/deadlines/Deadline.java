@@ -1,4 +1,4 @@
-package Deadliner;
+package deadliner.deadlines;
 
 import java.util.Date;
 

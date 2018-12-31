@@ -1,4 +1,9 @@
-package Deadliner;
+package deadliner;
+
+import deadliner.alarms.AlarmsPanel;
+import deadliner.deadlines.Deadline;
+import deadliner.deadlines.DeadlinesPanel;
+import deadliner.timetable.TimetablePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,7 +110,7 @@ public class Main extends JDialog {
         pack();
     }
 
-    static String convertTime(String time){
+    public static String convertTime(String time){
         return time.replaceAll("<br>","-");
     }
 
@@ -124,9 +129,9 @@ public class Main extends JDialog {
     private JPanel contentPane, mainPane;
     public static Calendar calendar = Calendar.getInstance();
 
-    static final int NUMBER_OF_CLASSES = 6,
+    public static final int NUMBER_OF_CLASSES = 6,
             ICON_SIZE = 35;
-    static final String[] CLASSES_TIME = {
+    public static final String[] CLASSES_TIME = {
                 "08:15<br>09:35",
                 "09:45<br>11:05",
                 "11:15<br>12:35",
@@ -134,7 +139,7 @@ public class Main extends JDialog {
                 "14:20<br>15:50",
                 "19:30<br>21:45"
     };
-    static final String[] DAYS = {
+    public static final String[] DAYS = {
             "Понедельник",
             "Вторник",
             "Среда",
@@ -147,11 +152,11 @@ public class Main extends JDialog {
             timetable,
             deadliner,
             alarms;
-    static ArrayList<Deadline> deadlines;
+    public static ArrayList<Deadline> deadlines;
     private CardLayout mainLayout;
     private AlarmsPanel alarmsPanel;
     private final Dimension APP_DIMENSION = new Dimension(300, 500);
-    static ImageIcon
+    public  static  ImageIcon
             //menuIcon,
             backIcon,
             addIcon,
@@ -160,13 +165,13 @@ public class Main extends JDialog {
             pauseIcon,
             playIcon,
             httpIcon;
-    private final int
+    private static final int
             TIMETABLE_PANEL_INDEX = 1,
             DEADLINES_PANEL_INDEX = 2,
             ALARMS_PANEL_INDEX = 3;
-    private final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
-    private  final String
-            APP_TITLE = "Deadliner",
+    private static final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
+    public  static final String
+            APP_TITLE = "deadliner",
             BACK_PNG_FILEPATH = "image/back.png",
             ADD_PNG_FILEPATH = "image/add.png",
             MENU_PNG_FILEPATH = "image/menu.png",

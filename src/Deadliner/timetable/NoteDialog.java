@@ -1,12 +1,15 @@
-package Deadliner;
+package deadliner.timetable;
+
+import deadliner.Main;
+import deadliner.timetable.Class;
+import deadliner.timetable.TimetablePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import static Deadliner.Main.ICON_SIZE;
-import static Deadliner.Main.convertTime;
-import static Deadliner.TimetablePanel.week;
+import static deadliner.Main.convertTime;
+import static deadliner.timetable.TimetablePanel.week;
 
 public class NoteDialog extends JDialog {
 

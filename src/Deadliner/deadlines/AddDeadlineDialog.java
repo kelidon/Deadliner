@@ -1,13 +1,12 @@
-package Deadliner;
+package deadliner.deadlines;
 
-import Deadliner.Deadline;
+import deadliner.Main;
+import deadliner.deadlines.Deadline;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
-
-import static Deadliner.Main.ICON_SIZE;
 
 public class AddDeadlineDialog extends JDialog {
 
