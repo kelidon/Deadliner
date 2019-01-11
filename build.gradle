@@ -1,0 +1,33 @@
+// apply plugin: 'java'
+// apply plugin: 'appilcation'
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            outputDir = file('out/gradleOutput')
+            resources {
+                srcDirs = ['src/resources']
+            }
+        }
+    }
+}
+
+jar {
+    baseName 'Deadliner'
+    manifest {
+        attributes 'Main-Class': 'deadliner.Main'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    println 'hello there'
+}
+
+
+mainClassName = 'deadliner.Main'
