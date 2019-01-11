@@ -2,8 +2,6 @@ package deadliner.timetable;
 
 import deadliner.Main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -30,9 +28,10 @@ public class Week {
             }
     }
 
-    Week(File timetable) {
+    Week(String timetable) {
         try {
-            Scanner scanner = new Scanner(timetable);
+            var is = this.getClass().getResourceAsStream(timetable);
+            Scanner scanner = new Scanner(is, "UTF-8");
             String temp;
             classes = new Class[Main.NUMBER_OF_CLASSES][Main.NUMBER_OF_CLASSES];
             int indexClasses = 0, indexDays = 0;
@@ -42,11 +41,11 @@ public class Week {
                     while (!temp.equals("&")) {
                         if (!temp.equals("_")) {
                             classes[indexDays][indexClasses] = Class.fromString(temp);
-                            if(indexClasses<4)
+                            if (indexClasses < 4)
                                 classes[indexDays][indexClasses].setTime(Main.CLASSES_TIME[indexClasses]);
-                            else if(classes[indexDays][indexClasses].getClassType().equals("str"))
+                            else if (classes[indexDays][indexClasses].getClassType().equals("str"))
                                 classes[indexDays][indexClasses].setTime(Main.CLASSES_TIME[5]);
-                            else if(classes[indexDays][indexClasses].getClassType().equals("litklub"))
+                            else if (classes[indexDays][indexClasses].getClassType().equals("litklub"))
                                 classes[indexDays][indexClasses].setTime(Main.CLASSES_TIME[4]);
                         } else {
                             classes[indexDays][indexClasses] = new Class();
@@ -59,8 +58,11 @@ public class Week {
                     indexClasses = 0;
                     temp = scanner.nextLine();
                 }
+
+                scanner.close();
             }
+        } catch (IllegalArgumentException exc) {
+            exc.printStackTrace();
         }
-        catch(IllegalArgumentException | FileNotFoundException exc){ exc.printStackTrace(); }
     }
 }

@@ -5,9 +5,11 @@ import deadliner.deadlines.Deadline;
 import deadliner.deadlines.DeadlinesPanel;
 import deadliner.timetable.TimetablePanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,6 +18,7 @@ import java.util.Date;
 public class Main extends JDialog {
 
     private Main() {
+        contentPane = new JPanel();
         onCreate();
 
         timetable.addActionListener(e -> mainLayout.show(mainPane, String.valueOf(TIMETABLE_PANEL_INDEX)));
@@ -45,17 +48,34 @@ public class Main extends JDialog {
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    @FunctionalInterface
+    public interface Foo {
+        ImageIcon method(String string);
+    }
+
     private void onCreate() {
         deadlines = new ArrayList<>();
 
-        //menuIcon = new ImageIcon(MENU_PNG_FILEPATH);
-        backIcon = new ImageIcon(BACK_PNG_FILEPATH);
-        addIcon = new ImageIcon(ADD_PNG_FILEPATH);
-        rightIcon = new ImageIcon(RIGHT_PNG_FILEPATH);
-        leftIcon = new ImageIcon(LEFT_PNG_FILEPATH);
-        playIcon = new ImageIcon(PLAY_PNG_FILEPATH);
-        pauseIcon = new ImageIcon(PAUSE_PNG_FILEPATH);
-        httpIcon = new ImageIcon(HTTP_PNG_FILEPATH);
+        try {
+//            TODO : replace all this mess with local lambda. That will be amazing/
+            // Foo getIcon = path -> {
+            //         try {
+            //         return new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(BACK_PNG_FILEPATH)));
+            //     } catch (Exception e) {
+                    
+            //     }
+            // };
+        //    menuIcon = new ImageIcon( ImageIO.read( this.getClass().getResourceAsStream(MENU_PNG_FILEPATH)));
+            backIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(BACK_PNG_FILEPATH)));
+            addIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(ADD_PNG_FILEPATH)));
+            rightIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(RIGHT_PNG_FILEPATH)));
+            leftIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(LEFT_PNG_FILEPATH)));
+            playIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(PLAY_PNG_FILEPATH)));
+            pauseIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(PAUSE_PNG_FILEPATH)));
+            httpIcon = new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(HTTP_PNG_FILEPATH)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setTitle(APP_TITLE);
         setContentPane(contentPane);
 
@@ -129,7 +149,12 @@ public class Main extends JDialog {
             "Пятница",
             "Суббота"
     };
-    private static final String FILE_PATH = "src/timetable.txt";
+    // TODO: remove all occurrences of "/resources"
+    // but it may (and will) break your IDEA. 
+    // I mean it won't run and your project
+    // So you will have to run it manually from command line (or smth else)
+    // A least that what happened to mee, and I still have no idea how to fix it
+    private static final String FILE_PATH = "/resources/timetable/timetable.txt";
     private JMenuItem
             timetable,
             deadliner,
@@ -139,7 +164,7 @@ public class Main extends JDialog {
     private AlarmsPanel alarmsPanel;
     private final Dimension APP_DIMENSION = new Dimension(300, 500);
     public static ImageIcon
-            //menuIcon,
+            // menuIcon,
             backIcon,
             addIcon,
             rightIcon,
@@ -154,12 +179,12 @@ public class Main extends JDialog {
     private static final String[] MENU_ITEMS_NAMES = {"Timetable", "Deadlines", "Alarms"};
     private static final String
             APP_TITLE = "deadliner",
-            BACK_PNG_FILEPATH = "image/back.png",
-            ADD_PNG_FILEPATH = "image/add.png",
-            MENU_PNG_FILEPATH = "image/menu.png",
-            RIGHT_PNG_FILEPATH = "image/right.png",
-            LEFT_PNG_FILEPATH = "image/left.png",
-            PLAY_PNG_FILEPATH = "image/play.png",
-            PAUSE_PNG_FILEPATH = "image/pause.png",
-            HTTP_PNG_FILEPATH = "image/http.png";
+            // MENU_PNG_FILEPATH = "/resources/icons/menu.png",
+            BACK_PNG_FILEPATH = "/resources/icons/back.png",
+            ADD_PNG_FILEPATH = "/resources/icons/add.png",
+            RIGHT_PNG_FILEPATH = "/resources/icons/right.png",
+            LEFT_PNG_FILEPATH = "/resources/icons/left.png",
+            PLAY_PNG_FILEPATH = "/resources/icons/play.png",
+            PAUSE_PNG_FILEPATH = "/resources/icons/pause.png",
+            HTTP_PNG_FILEPATH = "/resources/icons/http.png";
 }

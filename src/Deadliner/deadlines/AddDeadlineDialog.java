@@ -1,12 +1,9 @@
 package deadliner.deadlines;
 
 import deadliner.Main;
-import deadliner.deadlines.Deadline;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Date;
 
 public class AddDeadlineDialog extends JDialog {
 
@@ -75,5 +72,5 @@ public class AddDeadlineDialog extends JDialog {
             DATE_FIELDS_DIM = new Dimension(70, 20),
             INFO_DIM = new Dimension(219, 280);
     private final String ADD_DIALOG_TITLE = "Add a deadline";
-    private final int YEAR_SHIFT = 1900;
+    // private final int YEAR_SHIFT = 1900;
 }

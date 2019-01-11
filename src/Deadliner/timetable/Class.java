@@ -61,13 +61,17 @@ public class Class {
 
     public static Class fromString(String classInfo){
         Scanner scanner = new Scanner(classInfo);
+        
         Class aClass = new Class();
+       
         aClass.subject = scanner.next();
         aClass.room = scanner.next();
         if(aClass.room.equals("0"))
             aClass.room = "";
         aClass.classType = scanner.next();
 
+        scanner.close();
+        
         return aClass;
     }
 

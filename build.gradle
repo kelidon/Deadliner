@@ -1,19 +1,25 @@
-// apply plugin: 'java'
-// apply plugin: 'appilcation'
-
 plugins {
     id 'java'
     id 'application'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 sourceSets {
     main {
         java {
             srcDirs = ['src']
-            outputDir = file('out/gradleOutput')
             resources {
-                srcDirs = ['src/resources']
+                srcDirs = ['src/']
             }
+        }
+        resources {
+            srcDirs = ['src/']
+            // gotta do it like this, but it may (and will) break your IDEA. 
+            // I mean it won't run and your project
+            // So you will have to run it manually from command line (or smth else)
+            // A least that what happened to mee, and I still have no idea how to fix it
+            // srcDirs = ['src/resources']
         }
     }
 }
