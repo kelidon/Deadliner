@@ -33,8 +33,10 @@ public class Week {
             var is = this.getClass().getResourceAsStream(timetable);
             Scanner scanner = new Scanner(is, "UTF-8");
             String temp;
+            
             classes = new Class[Main.NUMBER_OF_CLASSES][Main.NUMBER_OF_CLASSES];
             int indexClasses = 0, indexDays = 0;
+            
             temp = scanner.nextLine();
             while (scanner.hasNext()) {
                 if (!temp.equals("&")) {
@@ -58,9 +60,10 @@ public class Week {
                     indexClasses = 0;
                     temp = scanner.nextLine();
                 }
-
-                scanner.close();
             }
+            
+            scanner.close();
+
         } catch (IllegalArgumentException exc) {
             exc.printStackTrace();
         }
