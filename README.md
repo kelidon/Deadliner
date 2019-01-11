@@ -1,2 +1,2 @@
-# deadliner
+# Deadliner
 Time management application
