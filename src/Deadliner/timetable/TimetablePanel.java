@@ -4,7 +4,6 @@ import deadliner.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Calendar;
 
 import static deadliner.Main.DAYS;
@@ -16,7 +15,7 @@ public class TimetablePanel extends JPanel {
 
         this.setLayout(new BorderLayout());
 
-        week = new Week(new File(timetableFilePath));
+        week = new Week(timetableFilePath);
         var dayPanels = new DayPanel[6];
         for (int i = 0; i < NUMBER_OF_CLASSES; i++) {
             dayPanels[i] = new DayPanel(week, i);

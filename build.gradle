@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            resources {
+                srcDirs = ['src/']
+            }
+        }
+        resources {
+            srcDirs = ['src/']
+            // gotta do it like this, but it may (and will) break your IDEA. 
+            // I mean it won't run and your project
+            // So you will have to run it manually from command line (or smth else)
+            // A least that what happened to mee, and I still have no idea how to fix it
+            // srcDirs = ['src/resources']
+        }
+    }
+}
+
+jar {
+    baseName 'Deadliner'
+    manifest {
+        attributes 'Main-Class': 'deadliner.Main'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    println 'hello there'
+}
+
+
+mainClassName = 'deadliner.Main'

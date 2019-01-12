@@ -6,7 +6,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -124,13 +123,21 @@ public class AlarmsPanel extends JPanel {
         new AlarmThread();
 
         try {
+
+            // It's what I used everywhere else
+            // AudioInputStream audioIn = AudioSystem.getAudioInputStream(
+            //         this.getClass().getResourceAsStream(AUDIO_FILE)
+            // );
+
+            // But for audio you should put audio inside jar and then 
+            // access it though URL
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(
-                    new File("src/031100.wav").getAbsoluteFile()
+                    this.getClass().getResource(AUDIO_FILE)
             );
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         } catch (Exception exc){
-            System.out.println(exc.getMessage());
+            System.out.println(exc.getMessage() +  " In AlarmsPanel");
         }
 
         var musicPanel = new JPanel();
@@ -196,6 +203,8 @@ public class AlarmsPanel extends JPanel {
         clip.stop();
         clip.close();
     }
+
+    private static final String AUDIO_FILE = "/resources/alarms/031100.wav";
 
     private boolean isAlarmSet = false;
     private LocalDateTime now;
